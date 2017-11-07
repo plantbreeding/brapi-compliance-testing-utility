@@ -1,4 +1,4 @@
-package org.brapi.brapiCertificationServer.model.test.domain.metadata;
+package org.brapi.brapiCertificationServer.model.test.metadata;
 
 public class MetaDataPagination {
 	private int totalCount;

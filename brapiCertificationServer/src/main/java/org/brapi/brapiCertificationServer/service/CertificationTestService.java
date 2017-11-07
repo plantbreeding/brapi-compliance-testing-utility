@@ -7,7 +7,7 @@ import java.util.List;
 import org.brapi.brapiCertificationServer.model.test.CertificationTest;
 import org.brapi.brapiCertificationServer.model.test.CertificationTestRequest;
 import org.brapi.brapiCertificationServer.model.test.CertificationTestResult;
-import org.brapi.brapiCertificationServer.model.test.domain.metadata.SearchResultsInterface;
+import org.brapi.brapiCertificationServer.model.test.metadata.GenricResultsInterface;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -58,7 +58,7 @@ public class CertificationTestService {
 	
 	private CertificationTestResult runTest(CertificationTest test, String baseURL) {
 		
-		SearchResultsInterface actual = getActual(test, baseURL);
+		GenricResultsInterface actual = getActual(test, baseURL);
 
 		CertificationTestResult result = compare(test.getExpectedResult(), actual);
 
@@ -74,7 +74,7 @@ public class CertificationTestService {
 				try {
 					String expectedTypeStr = testDoc.getString("expectedResultType");
 					Class expectedType = Class.forName(expectedTypeStr);
-					SearchResultsInterface expectedObj = (SearchResultsInterface) mongoTemplate.getConverter().read(expectedType, testDoc.get("expectedResult", Document.class));
+					GenricResultsInterface expectedObj = (GenricResultsInterface) mongoTemplate.getConverter().read(expectedType, testDoc.get("expectedResult", Document.class));
 					System.out.println(expectedObj);
 					
 					CertificationTest test = new CertificationTest();
@@ -100,7 +100,7 @@ public class CertificationTestService {
 		
 	}
 
-	private CertificationTestResult compare(SearchResultsInterface expected, SearchResultsInterface actual) {
+	private CertificationTestResult compare(GenricResultsInterface expected, GenricResultsInterface actual) {
 		CertificationTestResult result = new CertificationTestResult();
 		result.setTestID("123");
 		
@@ -117,14 +117,14 @@ public class CertificationTestService {
 		return result;
 	}
 
-	private SearchResultsInterface getActual(CertificationTest test, String baseURL) {
-		SearchResultsInterface actual = null;
+	private GenricResultsInterface getActual(CertificationTest test, String baseURL) {
+		GenricResultsInterface actual = null;
 		try {
 			Class returnType = Class.forName(test.getExpectedResultType());
 
 	        RestTemplate restTemplate = new RestTemplate();
 	        URI url = buildURL(baseURL, test.getTestCall());
-	        ResponseEntity<SearchResultsInterface> actualEntity = restTemplate.getForEntity(url, returnType);
+	        ResponseEntity<GenricResultsInterface> actualEntity = restTemplate.getForEntity(url, returnType);
 	        
 	        System.out.println(actualEntity.getStatusCodeValue());
 			

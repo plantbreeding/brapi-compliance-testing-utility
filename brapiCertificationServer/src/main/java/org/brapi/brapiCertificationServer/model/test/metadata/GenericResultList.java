@@ -1,8 +1,8 @@
-package org.brapi.brapiCertificationServer.model.test.domain.metadata;
+package org.brapi.brapiCertificationServer.model.test.metadata;
 
 import java.util.List;
 
-public class SearchResultsList<T>{
+public class GenericResultList<T>{
 	private List<T> data;
 
 	public List<T> getData() {

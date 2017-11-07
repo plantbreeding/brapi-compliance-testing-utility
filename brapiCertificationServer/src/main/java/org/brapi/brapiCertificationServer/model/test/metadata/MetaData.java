@@ -1,4 +1,4 @@
-package org.brapi.brapiCertificationServer.model.test.domain.metadata;
+package org.brapi.brapiCertificationServer.model.test.metadata;
 
 import java.util.List;
 

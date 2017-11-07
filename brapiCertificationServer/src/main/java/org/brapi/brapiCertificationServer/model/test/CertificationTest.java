@@ -1,6 +1,6 @@
 package org.brapi.brapiCertificationServer.model.test;
 
-import org.brapi.brapiCertificationServer.model.test.domain.metadata.SearchResultsInterface;
+import org.brapi.brapiCertificationServer.model.test.metadata.GenricResultsInterface;
 import org.springframework.data.annotation.Id;
 
 public class CertificationTest {
@@ -9,7 +9,7 @@ public class CertificationTest {
 	private String testGroup;
 	private String testCall;
 	private String apiVersion;
-	private SearchResultsInterface expectedResult;
+	private GenricResultsInterface expectedResult;
 	private String expectedResultType;
 	public String getId() {
 		return id;
@@ -35,10 +35,10 @@ public class CertificationTest {
 	public void setApiVersion(String apiVersion) {
 		this.apiVersion = apiVersion;
 	}
-	public SearchResultsInterface getExpectedResult() {
+	public GenricResultsInterface getExpectedResult() {
 		return expectedResult;
 	}
-	public void setExpectedResult(SearchResultsInterface expectedResult) {
+	public void setExpectedResult(GenricResultsInterface expectedResult) {
 		this.expectedResult = expectedResult;
 	}
 	public String getExpectedResultType() {

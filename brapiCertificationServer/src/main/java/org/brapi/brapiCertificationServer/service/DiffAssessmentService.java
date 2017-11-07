@@ -3,7 +3,7 @@ package org.brapi.brapiCertificationServer.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.brapi.brapiCertificationServer.model.test.domain.metadata.SearchResultsInterface;
+import org.brapi.brapiCertificationServer.model.test.metadata.GenricResultsInterface;
 import org.springframework.stereotype.Service;
 
 import de.danielbechler.diff.ObjectDiffer;
@@ -20,7 +20,7 @@ public class DiffAssessmentService {
 		differ = ObjectDifferBuilder.buildDefault();
 	}
 	
-	public List<String> compareObjects(final SearchResultsInterface actual, final SearchResultsInterface expected){
+	public List<String> compareObjects(final GenricResultsInterface actual, final GenricResultsInterface expected){
 		
 		DiffNode diffRoot = differ.compare(actual, expected);
 		

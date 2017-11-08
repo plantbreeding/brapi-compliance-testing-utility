@@ -3,8 +3,10 @@ package org.brapi.brapiCertificationServer.service;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.brapi.brapiCertificationServer.model.test.CertificationTest;
+import org.brapi.brapiCertificationServer.model.test.CertificationTestRecordRequest;
 import org.brapi.brapiCertificationServer.model.test.CertificationTestRequest;
 import org.brapi.brapiCertificationServer.model.test.CertificationTestResult;
 import org.brapi.brapiCertificationServer.model.test.metadata.GenricResultsInterface;
@@ -47,7 +49,7 @@ public class CertificationTestService {
 	}
 
 	public List<CertificationTestResult> getResults(String batchID){
-		return mongoTemplate.find(Query.query(Criteria.where("batchID").is(batchID)), CertificationTestResult.class);
+		return mongoTemplate.find(Query.query(Criteria.where("batchID").is(batchID)), CertificationTestResult.class, "CertificationTestResult");
 	}
 
 	public void addTest(String testRawJSON) {
@@ -139,5 +141,21 @@ public class CertificationTestService {
 
 	private URI buildURL(String baseURL, String testCall) {
 		return URI.create(baseURL + testCall);
+	}
+
+	public String recordNewTest(CertificationTestRecordRequest recordRequest) {
+		String testID = UUID.randomUUID().toString();
+		CertificationTest newTest = new CertificationTest();
+		newTest.setApiVersion(recordRequest.getApiVersion());
+		newTest.setExpectedResultType(recordRequest.getExpectedResultType());
+		newTest.setId(testID);
+		newTest.setTestCall(recordRequest.getTestCall());
+		newTest.setTestGroup(recordRequest.getTestGroup());
+		
+		newTest.setExpectedResult(getActual(newTest, recordRequest.getBaseURL()));
+		
+		mongoTemplate.save(newTest, "CertificationTest");
+		
+		return testID;
 	}
 }

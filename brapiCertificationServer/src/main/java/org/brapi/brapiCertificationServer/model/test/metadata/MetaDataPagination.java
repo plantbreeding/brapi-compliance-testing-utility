@@ -31,4 +31,33 @@ public class MetaDataPagination {
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + currentPage;
+		result = prime * result + pageSize;
+		result = prime * result + totalCount;
+		result = prime * result + totalPages;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MetaDataPagination other = (MetaDataPagination) obj;
+		if (currentPage != other.currentPage)
+			return false;
+		if (pageSize != other.pageSize)
+			return false;
+		if (totalCount != other.totalCount)
+			return false;
+		if (totalPages != other.totalPages)
+			return false;
+		return true;
+	}
 }

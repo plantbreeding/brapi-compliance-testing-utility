@@ -4,7 +4,7 @@ import org.brapi.brapiCertificationServer.model.test.metadata.GenericResultList;
 import org.brapi.brapiCertificationServer.model.test.metadata.GenricResultsInterface;
 import org.brapi.brapiCertificationServer.model.test.metadata.MetaData;
 
-public class ResultGetGermplasmGermplasmDbIdMarkerprofiles implements GenricResultsInterface{
+public class ResultGetMarkerProfiles implements GenricResultsInterface{
 	private MetaData metadata;
 	private GenericResultList<?> results;
 	

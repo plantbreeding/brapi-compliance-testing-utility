@@ -2,19 +2,19 @@ package org.brapi.brapiCertificationServer.model.test.domain;
 
 import java.util.Map;
 
-public class MarkerprofileDetails {
-	private String markerprofileDbId;
+public class MarkerProfileDetails {
+	private String markerProfileDbId;
 	private String germplasmDbId;
 	private String uniqueDisplayName;
 	// TODO why is this missing private String sampleDbId;
 	private String extractDbId;
 	private String analysisMethod;
 	private Map<String, String> data;
-	public String getMarkerprofileDbId() {
-		return markerprofileDbId;
+	public String getMarkerProfileDbId() {
+		return markerProfileDbId;
 	}
-	public void setMarkerprofileDbId(String markerprofileDbId) {
-		this.markerprofileDbId = markerprofileDbId;
+	public void setMarkerProfileDbId(String markerProfileDbId) {
+		this.markerProfileDbId = markerProfileDbId;
 	}
 	public String getGermplasmDbId() {
 		return germplasmDbId;

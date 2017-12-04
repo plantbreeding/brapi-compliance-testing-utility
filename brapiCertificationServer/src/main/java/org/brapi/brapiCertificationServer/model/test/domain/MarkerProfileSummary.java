@@ -1,18 +1,18 @@
 package org.brapi.brapiCertificationServer.model.test.domain;
 
-public class MarkerprofileSummary {
-	private String markerprofileDbId;
+public class MarkerProfileSummary {
+	private String markerProfileDbId;
 	private String germplasmDbId;
 	private String uniqueDisplayName;
 	private String sampleDbId;
 	private String extractDbId;
 	private String analysisMethod;
 	private int resultCount;
-	public String getMarkerprofileDbId() {
-		return markerprofileDbId;
+	public String getMarkerProfileDbId() {
+		return markerProfileDbId;
 	}
-	public void setMarkerprofileDbId(String markerprofileDbId) {
-		this.markerprofileDbId = markerprofileDbId;
+	public void setMarkerProfileDbId(String markerProfileDbId) {
+		this.markerProfileDbId = markerProfileDbId;
 	}
 	public String getGermplasmDbId() {
 		return germplasmDbId;

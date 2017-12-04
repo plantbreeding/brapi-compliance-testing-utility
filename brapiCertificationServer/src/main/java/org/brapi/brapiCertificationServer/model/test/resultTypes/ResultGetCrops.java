@@ -1,6 +1,5 @@
 package org.brapi.brapiCertificationServer.model.test.resultTypes;
 
-import org.brapi.brapiCertificationServer.model.test.domain.Call;
 import org.brapi.brapiCertificationServer.model.test.metadata.GenericResultList;
 import org.brapi.brapiCertificationServer.model.test.metadata.GenricResultsInterface;
 import org.brapi.brapiCertificationServer.model.test.metadata.MetaData;

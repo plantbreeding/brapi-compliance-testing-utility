@@ -2,10 +2,13 @@ package org.brapi.brapiCertificationServer.service;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.brapi.brapiCertificationServer.model.test.CertificationTest;
+import org.brapi.brapiCertificationServer.model.test.CertificationTestChain;
 import org.brapi.brapiCertificationServer.model.test.CertificationTestRecordRequest;
 import org.brapi.brapiCertificationServer.model.test.CertificationTestRequest;
 import org.brapi.brapiCertificationServer.model.test.CertificationTestResult;
@@ -30,8 +33,8 @@ import com.mongodb.MongoException;
 public class CertificationTestService {
 	private MongoTemplate mongoTemplate;
 	private DiffAssessmentService diffAssessmentService;
-	
-	@Autowired	
+
+	@Autowired
 	public CertificationTestService(MongoTemplate mongoTemplate, DiffAssessmentService diffAssessmentService) {
 		this.mongoTemplate = mongoTemplate;
 		this.diffAssessmentService = diffAssessmentService;
@@ -39,79 +42,97 @@ public class CertificationTestService {
 
 	@Async
 	public void runTests(CertificationTestRequest request, String batchID) {
-		List<CertificationTest> tests = getTests(request.getVersion());
-		
-		for(CertificationTest test: tests) {
-			CertificationTestResult result = runTest(test, request.getBaseURL());
-			result.setBatchID(batchID);
-			storeResult(result);
+		List<CertificationTestChain> chains = getTests(request.getVersion());
+
+		for (CertificationTestChain chain : chains) {
+			for (CertificationTest test : chain.getTests()) {
+				CertificationTestResult result = runTest(test, request.getBaseURL());
+				result.setBatchID(batchID);
+				storeResult(result);
+			}
 		}
 	}
 
-	public List<CertificationTestResult> getResults(String batchID){
-		return mongoTemplate.find(Query.query(Criteria.where("batchID").is(batchID)), CertificationTestResult.class, "CertificationTestResult");
+	public List<CertificationTestResult> getResults(String batchID) {
+		return mongoTemplate.find(Query.query(Criteria.where("batchID").is(batchID)), CertificationTestResult.class,
+				"CertificationTestResult");
 	}
 
 	public void addTest(String testRawJSON) {
 		Document saveObj = Document.parse(testRawJSON);
-		//TODO not safe doing it this way, accepting raw user input without validation
+		// TODO not safe doing it this way, accepting raw user input without validation
 		mongoTemplate.save(saveObj, "CertificationTest");
 	}
-	
+
 	private CertificationTestResult runTest(CertificationTest test, String baseURL) {
-		
+
 		GenricResultsInterface actual = getActual(test, baseURL);
 
 		CertificationTestResult result = compare(test.getExpectedResult(), actual);
 
 		return result;
 	}
-	
-	private List<CertificationTest> getTests(String version){
-		
-		final List<CertificationTest> tests = new ArrayList<CertificationTest>();
-		mongoTemplate.executeQuery(Query.query(Criteria.where("apiVersion").is(version)), "CertificationTest", new DocumentCallbackHandler() {
-			
-			public void processDocument(Document testDoc) throws MongoException, DataAccessException {
-				try {
-					String expectedTypeStr = testDoc.getString("expectedResultType");
-					Class expectedType = Class.forName(expectedTypeStr);
-					GenricResultsInterface expectedObj = (GenricResultsInterface) mongoTemplate.getConverter().read(expectedType, testDoc.get("expectedResult", Document.class));
-					System.out.println(expectedObj);
-					
-					CertificationTest test = new CertificationTest();
-					test.setApiVersion(testDoc.getString("apiVersion"));
-					test.setExpectedResult(expectedObj);
-					test.setExpectedResultType(expectedTypeStr);
-					test.setId(testDoc.getString("id"));
-					test.setTestCall(testDoc.getString("testCall"));
-					test.setTestGroup(testDoc.getString("group"));
-					
-					tests.add(test);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		
-		return tests;
+
+	private List<CertificationTestChain> getTests(String version) {
+
+		final Map<String, List<CertificationTest>> tests = new HashMap<String, List<CertificationTest>>();
+		mongoTemplate.executeQuery(Query.query(Criteria.where("apiVersion").is(version)), "CertificationTest",
+				new DocumentCallbackHandler() {
+
+					public void processDocument(Document testDoc) throws MongoException, DataAccessException {
+						try {
+							String expectedTypeStr = testDoc.getString("expectedResultType");
+							Class expectedType = Class.forName(expectedTypeStr);
+							GenricResultsInterface expectedObj = (GenricResultsInterface) mongoTemplate.getConverter()
+									.read(expectedType, testDoc.get("expectedResult", Document.class));
+							System.out.println(expectedObj);
+
+							CertificationTest test = new CertificationTest();
+							test.setApiVersion(testDoc.getString("apiVersion"));
+							test.setExpectedResult(expectedObj);
+							test.setExpectedResultType(expectedTypeStr);
+							test.setId(testDoc.getString("id"));
+							test.setTestCall(testDoc.getString("testCall"));
+							test.setChainId(testDoc.getString("chainId"));
+							test.setChainIndexNumber(testDoc.getInteger("chainIndexNumber"));
+
+							if (!tests.containsKey(test.getChainId())) {
+								tests.put(test.getChainId(), new ArrayList<CertificationTest>());
+							}
+							tests.get(test.getChainId()).add(test);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+
+		List<CertificationTestChain> chains = new ArrayList<CertificationTestChain>();
+		for (String chainId : tests.keySet()) {
+			CertificationTestChain chain = new CertificationTestChain();
+			chain.setId(chainId);
+			tests.get(chainId).sort((c1, c2) -> {
+				return c1.getChainIndexNumber() - c2.getChainIndexNumber();
+			});
+			chain.setTests(tests.get(chainId));
+		}
+		return chains;
 	}
 
 	private void storeResult(CertificationTestResult result) {
 		mongoTemplate.save(result, "CertificationTestResult");
-		
+
 	}
 
 	private CertificationTestResult compare(GenricResultsInterface expected, GenricResultsInterface actual) {
 		CertificationTestResult result = new CertificationTestResult();
 		result.setTestID("123");
-		
+
 		List<String> diffList = diffAssessmentService.compareObjects(actual, expected);
-		
-		if(diffList.isEmpty()) {
+
+		if (diffList.isEmpty()) {
 			result.setPass(true);
 			result.setErrorMsg("PASS");
-		}else {
+		} else {
 			result.setPass(false);
 			result.setDiffList(diffList);
 			result.setErrorMsg("ERROR: Returned values don't match.");
@@ -122,20 +143,21 @@ public class CertificationTestService {
 	private GenricResultsInterface getActual(CertificationTest test, String baseURL) {
 		GenricResultsInterface actual = null;
 		try {
-			Class returnType = Class.forName(test.getExpectedResultType());
+			Class<GenricResultsInterface> returnType = (Class<GenricResultsInterface>) Class
+					.forName(test.getExpectedResultType());
 
-	        RestTemplate restTemplate = new RestTemplate();
-	        URI url = buildURL(baseURL, test.getTestCall());
-	        ResponseEntity<GenricResultsInterface> actualEntity = restTemplate.getForEntity(url, returnType);
-	        
-	        System.out.println(actualEntity.getStatusCodeValue());
-			
-	        actual = actualEntity.getBody();
-			
+			RestTemplate restTemplate = new RestTemplate();
+			URI url = buildURL(baseURL, test.getTestCall());
+			ResponseEntity<GenricResultsInterface> actualEntity = restTemplate.getForEntity(url, returnType);
+
+			System.out.println(actualEntity.getStatusCodeValue());
+
+			actual = actualEntity.getBody();
+
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		return actual;
 	}
 
@@ -150,12 +172,13 @@ public class CertificationTestService {
 		newTest.setExpectedResultType(recordRequest.getExpectedResultType());
 		newTest.setId(testID);
 		newTest.setTestCall(recordRequest.getTestCall());
-		newTest.setTestGroup(recordRequest.getTestGroup());
-		
+		newTest.setChainId(recordRequest.getChainId());
+		newTest.setChainIndexNumber(recordRequest.getChainIndexNumber());
+
 		newTest.setExpectedResult(getActual(newTest, recordRequest.getBaseURL()));
-		
+
 		mongoTemplate.save(newTest, "CertificationTest");
-		
+
 		return testID;
 	}
 }

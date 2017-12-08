@@ -6,22 +6,30 @@ import org.springframework.data.annotation.Id;
 public class CertificationTest {
 	@Id
 	private String id;
-	private String testGroup;
+	private String chainId;
+	private int chainIndexNumber;
 	private String testCall;
 	private String apiVersion;
 	private GenricResultsInterface expectedResult;
 	private String expectedResultType;
+
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getTestGroup() {
-		return testGroup;
+	public String getChainId() {
+		return chainId;
 	}
-	public void setTestGroup(String testGroup) {
-		this.testGroup = testGroup;
+	public void setChainId(String chainId) {
+		this.chainId = chainId;
+	}
+	public int getChainIndexNumber() {
+		return chainIndexNumber;
+	}
+	public void setChainIndexNumber(int chainIndexNumber) {
+		this.chainIndexNumber = chainIndexNumber;
 	}
 	public String getTestCall() {
 		return testCall;

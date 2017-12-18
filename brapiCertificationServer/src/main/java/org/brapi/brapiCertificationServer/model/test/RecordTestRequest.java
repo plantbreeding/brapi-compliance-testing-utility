@@ -1,6 +1,6 @@
 package org.brapi.brapiCertificationServer.model.test;
 
-public class CertificationTestRecordRequest {
+public class RecordTestRequest {
 	private String chainId;
 	private int chainIndexNumber;
 	private String testCall;

@@ -2,18 +2,10 @@ package org.brapi.brapiCertificationServer.model.test;
 
 import java.util.List;
 
-public class CertificationTestResult {
-	private String testID;
-	private String batchID;
+public class TestResult {
 	private boolean pass;
 	private String errorMsg;
 	private List<String> diffList;
-	public String getTestID() {
-		return testID;
-	}
-	public void setTestID(String testID) {
-		this.testID = testID;
-	}
 	public boolean isPass() {
 		return pass;
 	}
@@ -31,12 +23,6 @@ public class CertificationTestResult {
 	}
 	public void setDiffList(List<String> diffList) {
 		this.diffList = diffList;
-	}
-	public String getBatchID() {
-		return batchID;
-	}
-	public void setBatchID(String batchID) {
-		this.batchID = batchID;
 	}
 	
 }

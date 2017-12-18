@@ -1,3 +1,13 @@
-<p>
-  test-selection works!
-</p>
+<div class="row" style="margin: 10px 0 25px 0">
+  <ul class="nav nav-pills nav-stacked col-xs-3">
+      <li *ngFor="let testCategory of testCategories" [ngClass]="{'active': testCategory == selectedCategory}">
+          <a [routerLink]="" (click)="selectCategory(testCategory)">{{testCategory.categoryName}} ({{testCategory.selectedTotal}})</a>
+      </li>
+  </ul>
+
+  <div class="tab-content col-xs-9">
+      <div class="tab-pane fade in active" *ngFor="let testCategory of testCategories" >
+        <app-test-selection-list *ngIf="testCategory == selectedCategory" [testList]="testCategory.testList" (selectedTests)="selectedTests($event)"></app-test-selection-list>
+      </div>
+  </div>
+</div>

@@ -1,38 +1,26 @@
-<ul class="nav nav-tabs">
-  <li class="active">
-    <a data-toggle="tab" href="#results-tab">Test Results</a>
-  </li>
-  <li>
-    <a data-toggle="tab" href="#log-tab">Test Log</a>
-  </li>
-</ul>
-<div class="tab-content">
-  <div id="results-tab" class="tab-pane fade in active">
-    <ul class="list-group">
-        <li class="list-group-item">
-          <a href="home" style="display: block">
-              <span style="color: green; font-weight: bold;">PASS</span>
-              - Test Name and Description
+<div style="margin: 10px 0;">
+  <ul class="nav nav-tabs">
+    <li [ngClass]="{'active': selectedTab(0)}">
+      <a  [routerLink]="" (click)="selectTab(0)" >Test Results</a>
+    </li>
+    <li [ngClass]="{'active': selectedTab(1)}">
+      <a  [routerLink]="" (click)="selectTab(1)">Test Log</a>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div id="results-tab" *ngIf="selectedTab(0)"  class="tab-pane fade in active">
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let result of results">
+          <a [routerLink]=""style="display: block">
+            <span [style.color]="result.pass? 'green': 'red'" style="font-weight: bold;">{{result.pass? 'PASS': 'FAIL'}}</span>
+            - {{result.errorMsg}}
           </a>
         </li>
-        <li class="list-group-item">
-          <a href="home" style="display: block">
-              <span style="color: red; font-weight: bold;">FAIL</span>
-              - Test Name and Description
-          </a>
-        </li>
-        <li class="list-group-item">
-          <a href="home" style="display: block">
-              <span style="color: green; font-weight: bold;">PASS</span>
-              - Test Name and Description
-          </a>
-        </li>
-    </ul>
-  </div>
-  <div id="log-tab" class="tab-pane fade">
-    <textarea readonly rows="25" cols="108">Log
-      log
-      log
+      </ul>
+    </div>
+    <div id="log-tab"  *ngIf="selectedTab(1)" class="tab-pane fade in active">
+      <textarea readonly rows="25" cols="108"> {{resultsLog}}
     </textarea>
+    </div>
   </div>
 </div>

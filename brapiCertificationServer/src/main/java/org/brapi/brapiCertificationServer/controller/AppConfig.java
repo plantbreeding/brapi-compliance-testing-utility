@@ -2,8 +2,9 @@ package org.brapi.brapiCertificationServer.controller;
 
 import java.util.concurrent.Executor;
 
-import org.brapi.brapiCertificationServer.service.CertificationTestService;
+import org.brapi.brapiCertificationServer.service.TestRunnerService;
 import org.brapi.brapiCertificationServer.service.DiffAssessmentService;
+import org.brapi.brapiCertificationServer.service.TestResultsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -18,8 +19,8 @@ import com.mongodb.MongoClient;
 public class AppConfig implements AsyncConfigurer{
 	
 	@Bean
-	public CertificationTestService certificationTestService() {
-		return new CertificationTestService(mongoTemplate(), diffAssessmentService());
+	public TestRunnerService certificationTestService() {
+		return new TestRunnerService(mongoTemplate(), diffAssessmentService(), new TestResultsService(mongoTemplate()));
 	}
 
 	@Bean

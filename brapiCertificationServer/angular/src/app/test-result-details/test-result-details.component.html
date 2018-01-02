@@ -1,0 +1,19 @@
+<div *ngIf="useCaseResult">
+  <div class="row" *ngFor="let result of useCaseResult.results; let i = index;">
+    <p>Call #{{useCaseResult.useCase.tests[i].useCaseIndexNumber + 1}}: /{{useCaseResult.useCase.tests[i].callPath}}</p>
+    <p [style.color]="result.pass? 'green': 'red'" style="font-weight: bold;">{{result.pass? 'PASS': 'FAIL'}}</p>
+    <ul *ngIf="!result.pass">
+      <li *ngFor="let msg of result.diffList">
+        {{msg}}
+      </li>
+    </ul>
+    <div class="col-sm-6">
+      <p>Expected</p>
+      <pre style="max-height: 360px">{{parse(result.rawExpected) | json}}</pre>
+    </div>
+    <div class="col-sm-6">
+      <p>Actual</p>
+      <pre style="max-height: 360px">{{parse(result.rawActual) | json}}</pre>
+    </div>
+  </div>
+</div>

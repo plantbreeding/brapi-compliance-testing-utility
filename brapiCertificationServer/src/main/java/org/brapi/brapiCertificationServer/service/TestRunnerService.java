@@ -18,6 +18,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
@@ -61,8 +62,23 @@ public class TestRunnerService {
 		GenricResultsInterface actual = getActual(test, baseURL);
 
 		TestResult result = compare(expected, actual);
+		
+		result.setRawExpected(getRawObject(expected));
+		result.setRawActual(getRawObject(actual));
 
 		return result;
+	}
+
+	private String getRawObject(GenricResultsInterface obj) {
+		ObjectMapper mapper = new ObjectMapper();
+		String ret = null;
+		try {
+			ret = mapper.writeValueAsString(obj);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ret;
 	}
 
 	private TestResult compare(GenricResultsInterface expected, GenricResultsInterface actual) {
@@ -76,7 +92,7 @@ public class TestRunnerService {
 		} else {
 			result.setPass(false);
 			result.setDiffList(diffList);
-			result.setErrorMsg("ERROR: Returned values don't match.");
+			result.setErrorMsg("FAIL: Diff detected between Expected and Actual");
 		}
 		return result;
 	}

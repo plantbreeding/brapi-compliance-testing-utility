@@ -1,42 +1,56 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Observable, Subject, Subscription} from 'rxjs/Rx';
+import { Observable, Subject, Subscription } from 'rxjs/Rx';
 
 import { RunTestRequest } from '../model/run-tests-request.class';
 import { UseCaseResult } from '../model/use-case-result.class';
 import { UseCase } from '../model/use-case.class';
+import { CallDefinition } from '../model/call-defintion';
 
 @Injectable()
 export class TestAccessService {
-
+  server: string = 'http://localhost:8080/';
   resultsSubject: Subject<UseCaseResult[]> = new Subject();
   private subscription: Subscription;
 
   constructor(private http: HttpClient) { }
 
-  runTests(req: RunTestRequest):Observable<String>{
-    return this.http.post<String>('http://localhost:8080/runtest', req);
+  runTests(req: RunTestRequest): Observable<String> {
+    return this.http.post<String>(this.server + 'runtest', req);
   }
 
-  getTestResults(batchId: string){
-    this.subscription = Observable.interval(1000).switchMap(val => {
-      return this.http.get<UseCaseResult[]>('http://localhost:8080/testresults/' + batchId);
-    }).subscribe((data:UseCaseResult[])=>{
-      console.log(data);
+  getTestResults(batchId: string) {
+    this.subscription = Observable.timer(0, 1000).switchMap(val => {
+      return this.http.get<UseCaseResult[]>(this.server + 'testresults/' + batchId);
+    }).subscribe((data: UseCaseResult[]) => {
       this.resultsSubject.next(data);
-      this.subscription.unsubscribe();
+      if (data.length > 0) {
+        this.subscription.unsubscribe();
+      }
     });
   }
 
-  getAllTestSummaries(): Observable<UseCase[]>{
-    return this.http.get<UseCase[]>('http://localhost:8080/tests');
+  getAllTestSummaries(): Observable<UseCase[]> {
+    return this.http.get<UseCase[]>(this.server + 'tests');
   }
 
-  getTestDetails():UseCase{
-    return ;
+  getTestDetails(): UseCase {
+    return;
   }
 
-  getTestResultsSubject():Subject<UseCaseResult[]>{
+  getTestResultsSubject(): Subject<UseCaseResult[]> {
     return this.resultsSubject;
+  }
+
+  getTest(id: string): Observable<UseCase> {
+    return this.http.get<UseCase>(this.server + 'test/' + id);
+  }
+
+  saveTest(useCase: UseCase): Observable<String> {
+    return this.http.post<String>(this.server + 'test', useCase);
+  }
+
+  getCallDefinitions(): Observable<CallDefinition[]> {
+    return this.http.get<CallDefinition[]>(this.server + 'calls');
   }
 }

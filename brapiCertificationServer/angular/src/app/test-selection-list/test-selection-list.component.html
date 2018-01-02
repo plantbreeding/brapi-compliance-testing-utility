@@ -1,18 +1,33 @@
 <div style="min-height: 350px">
   <table class="table table-striped table-condensed table-hover">
     <tbody>
-        <tr>
-          <td>
-            <input type="checkbox" (change)=selectAll() [checked]="isSelectAll">
-          </td>
-          <td>Select All</td>
-        </tr>
-        <tr *ngFor="let test of pagedTests[currentPage]">
-          <td>
-            <input type="checkbox" (change)="toggleTest(test)" [checked]="test.selected">
-          </td>
-          <td>{{test.useCaseName}}</td>
-        </tr>
+      <tr>
+        <td>
+          <input type="checkbox" (change)="selectAll()" [checked]="isSelectAll">
+        </td>
+        <td>Select All</td>
+        <td colspan="2">
+          <a routerLink="" (click)="createNewTest()" class="btn btn-default" style="float:right;">
+            New Use Case
+          </a>
+        </td>
+      </tr>
+      <tr *ngFor="let test of pagedTests[currentPage]">
+        <td>
+          <input type="checkbox" (change)="toggleTest(test)" [checked]="test.selected">
+        </td>
+        <td>{{test.useCaseName}}</td>
+        <td style="width: 60px">
+          <a [routerLink]="['/test', test.id, false]" class="btn btn-default" style="float:right;">
+            View
+          </a>
+        </td>
+        <td style="width: 60px">
+          <a [routerLink]="['/test', test.id, true]" class="btn btn-default" style="float:right;">
+            Edit
+          </a>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>

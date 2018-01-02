@@ -19,10 +19,11 @@ export class TestResultsComponent implements OnInit {
 
   ngOnInit() {
     this.selectedTabIndex = 0;
-    this.resultsLog = 'TEST LOG\n'
     this.testAccessService.getTestResultsSubject().subscribe((data:UseCaseResult[]) =>{
+      this.resultsLog = 'TEST LOG\n'
       this.results = data;
       for(let result of data){
+        this.resultsLog = this.resultsLog.concat(result.useCase.useCaseName, '\n');
         for(let callResult of result.results){
           this.resultsLog = this.resultsLog.concat(callResult.errorMsg, '\n');
         }

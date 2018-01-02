@@ -10,7 +10,7 @@
 </div>
 <div class="row">
   <div class="col-xs-offset-5 col-xs-2">
-    <a [routerLink]="" (click)="runTest()" class="btn btn-default">
+    <a [routerLink]="" (click)="runTest()" class="btn btn-default" [ngClass]="{'disabled': testIds.length == 0}">
       Run Tests
     </a>
   </div>

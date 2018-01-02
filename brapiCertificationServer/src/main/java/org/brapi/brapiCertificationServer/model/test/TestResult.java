@@ -6,6 +6,21 @@ public class TestResult {
 	private boolean pass;
 	private String errorMsg;
 	private List<String> diffList;
+	private String rawExpected;
+	private String rawActual;
+	
+	public String getRawExpected() {
+		return rawExpected;
+	}
+	public void setRawExpected(String rawExpected) {
+		this.rawExpected = rawExpected;
+	}
+	public String getRawActual() {
+		return rawActual;
+	}
+	public void setRawActual(String rawActual) {
+		this.rawActual = rawActual;
+	}
 	public boolean isPass() {
 		return pass;
 	}

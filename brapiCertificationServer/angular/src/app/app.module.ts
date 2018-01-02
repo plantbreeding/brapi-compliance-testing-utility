@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -9,15 +10,16 @@ import { TestSelectionComponent } from './test-selection/test-selection.componen
 import { TestResultsComponent } from './test-results/test-results.component';
 import { TestDetailsComponent } from './test-details/test-details.component';
 import { TestSelectionListComponent } from './test-selection-list/test-selection-list.component';
+import { TestResultDetailsComponent } from './test-result-details/test-result-details.component';
+import { TestDetailsEditComponent } from './test-details-edit/test-details-edit.component';
+import { TestDetailsViewComponent } from './test-details-view/test-details-view.component';
 
 const appRoutes: Routes = [
   { path: 'runtests', component: RunTestsComponent },
   { path: 'runtests/:batchId', component: RunTestsComponent },
-  { path: 'test/:id',      component: TestDetailsComponent },
-  { path: '',
-    redirectTo: '/runtests',
-    pathMatch: 'full'
-  },
+  { path: 'test/:id/:edit', component: TestDetailsComponent },
+  { path: 'results/:batchId/:id', component: TestResultDetailsComponent },
+  { path: '', pathMatch:'full', redirectTo: '/runtests' },
   { path: '**', redirectTo: '/runtests' }
 ];
 
@@ -28,12 +30,16 @@ const appRoutes: Routes = [
     TestSelectionComponent,
     TestResultsComponent,
     TestDetailsComponent,
-    TestSelectionListComponent
+    TestSelectionListComponent,
+    TestResultDetailsComponent,
+    TestDetailsEditComponent,
+    TestDetailsViewComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

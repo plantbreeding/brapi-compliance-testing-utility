@@ -1,3 +1,9 @@
-<p>
-  test-details works!
-</p>
+<div class="row">
+  <a [routerLink]="" (click)="back()" class="btn btn-default">
+    Back
+  </a>
+</div>
+
+<app-test-details-view *ngIf="!edit" [useCase]="useCase" (toggleEdit)="toggleEdit()"></app-test-details-view>
+<app-test-details-edit *ngIf="edit" [useCase]="useCase" (toggleEdit)="toggleEdit()"></app-test-details-edit>
+<pre>{{useCase | json}}</pre>

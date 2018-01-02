@@ -1,8 +1,9 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { TestCategory } from '../model/test-category.class';
 import { TestAccessService } from '../service/test-access.service';
 import { UseCase } from '../model/use-case.class';
+import { UseCaseResult } from '../model/use-case-result.class';
 
 @Component({
   selector: 'app-test-selection',
@@ -20,7 +21,19 @@ export class TestSelectionComponent implements OnInit {
 
   ngOnInit() {
     this.testCategories = this.getCategories();
-
+    this.testAccessService.getTestResultsSubject().subscribe((data: UseCaseResult[]) => {
+      data.map((d: UseCaseResult) => {
+        let selected = d.useCase;
+        for (let useCase of this.testCategories[0].testList) {
+          if (useCase.id == selected.id) {
+            useCase.selected = true;
+            break;
+          }
+        }
+      });
+      this.testCategories[0].selectedTotal = this.calcSelectedTotal(this.testCategories[0].testList);
+      this.emitTestIds();
+    });
   }
 
   selectCategory(testCategory: TestCategory) {
@@ -29,7 +42,7 @@ export class TestSelectionComponent implements OnInit {
 
   selectedTests(selectedTests: UseCase[]) {
     this.selectedCategory.testList = selectedTests;
-    this.selectedCategory.selectedTotal = selectedTests.filter((val) => { return val.selected }).length;
+    this.selectedCategory.selectedTotal = this.calcSelectedTotal(selectedTests);
     this.emitTestIds();
   }
 
@@ -41,18 +54,19 @@ export class TestSelectionComponent implements OnInit {
     this.testIds.emit(allIds);
   }
 
+  calcSelectedTotal(cases:UseCase[]):number{
+    let x = cases.filter((val) => {return val.selected });
+    return x.length;
+  }
+
   getCategories(): TestCategory[] {
     let testCategories: TestCategory[] = new Array();
     testCategories.push(this.getMockCategory('All Use Cases'));
-    testCategories.push(this.getMockCategory('Phenotype Data'));
-    testCategories.push(this.getMockCategory('Genomic Data'));
-    testCategories.push(this.getMockCategory('Sample Tracking'));
 
     this.testAccessService.getAllTestSummaries().subscribe(
       data => {
-        console.log(data);
         this.testCategories[0].testList = data;
-        this.testCategories[0].selectedTotal = this.testCategories[0].testList.filter((val) => { val.selected }).length;
+        this.testCategories[0].selectedTotal = this.calcSelectedTotal(this.testCategories[0].testList);
         this.selectedCategory = this.testCategories[0];
       },
       err => {

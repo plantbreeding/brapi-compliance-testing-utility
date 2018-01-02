@@ -1,5 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {Router} from '@angular/router';
+
 import { UseCase } from '../model/use-case.class';
+import { TestAccessService } from '../service/test-access.service';
 
 @Component({
   selector: 'app-test-selection-list',
@@ -14,7 +17,7 @@ export class TestSelectionListComponent implements OnInit {
   currentPage: number;
   isSelectAll: boolean;
 
-  constructor() { }
+  constructor(private testAccessService: TestAccessService, private router: Router) { }
 
   ngOnInit() {
     this.buildPagedTests();
@@ -62,5 +65,11 @@ export class TestSelectionListComponent implements OnInit {
   }
   range(n: number): number[] {
     return Array(n).fill(0).map((x, i) => i);
+  }
+  createNewTest(){
+    let useCase: UseCase = new UseCase();
+    this.testAccessService.saveTest(useCase).subscribe(id =>{
+      this.router.navigate(['/test', id, true]);
+    })
   }
 }

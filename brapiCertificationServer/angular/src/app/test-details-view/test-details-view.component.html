@@ -1,0 +1,17 @@
+<div *ngIf="useCase">
+  <div class="row">
+    <div style="margin: 20px 0">
+      <h3>Use Case: {{useCase.useCaseName}}
+        <a [routerLink]="" (click)="edit()" class="btn btn-default" style="float:right;">
+          Edit
+        </a>
+      </h3>
+    </div>
+    <div *ngFor="let call of useCase.tests">
+      <p>Call #{{call.useCaseIndexNumber + 1}}: /{{call.callPath}}</p>
+      <p>Expected Return Type: {{call.expectedResultType}}</p>
+      <p>Expected Return Content:</p>
+      <pre>{{parse(call.expectedResultRaw) | json}}</pre>
+    </div>
+  </div>
+</div>

@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { TestAccessService } from '../service/test-access.service';
 import { RunTestRequest } from '../model/run-tests-request.class';
 import { Observable } from 'rxjs/Observable';
+import { UseCase } from '../model/use-case.class';
+import { UseCaseResult } from '../model/use-case-result.class';
 
 @Component({
   selector: 'app-run-tests',
@@ -13,19 +15,19 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./run-tests.component.css']
 })
 export class RunTestsComponent implements OnInit, OnDestroy {
-  id: String;
   private sub: any;
-  testIds: String[];
+  testIds: String[] = new Array();
   baseURL: String;
-  testResultsBatchId: String;
 
   constructor(private testAccessService: TestAccessService, private location: Location, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.baseURL = 'http://localhost:8081/brapi/v1/';
     this.sub = this.route.params.subscribe(params => {
-       this.id = params['batchId'];
-       console.log(this.id);
+       let testResultsBatchId = params['batchId'];
+       if(testResultsBatchId){
+         this.testAccessService.getTestResults(testResultsBatchId);
+       }
     });
   }
 
@@ -33,18 +35,16 @@ export class RunTestsComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  setTestIds(ids){
+  setTestIds(ids: String[]){
     this.testIds = ids;
   }
 
   runTest(){
-    console.log(this.testIds);
     let runReq: RunTestRequest = new RunTestRequest();
     runReq.testCaseIds = this.testIds;
     runReq.baseURL = this.baseURL;
     this.testAccessService.runTests(runReq).subscribe((batchId: string) => {
       this.location.go('runtests/' + batchId);
-      this.testResultsBatchId = batchId;
       this.testAccessService.getTestResults(batchId);
     },
     err => {

@@ -62,8 +62,17 @@ public class TestCreationService {
 		mongoTemplate.dropCollection(MongoUtility.USE_CASE_COLLECTION);
 	}
 	
-	public void addTest(UseCase useCase) {
+	public String addTest(UseCase useCase) {
+		if(useCase.getId() == null) {
+			useCase.setId(UUID.randomUUID().toString());
+		}
 		mongoTemplate.save(useCase, MongoUtility.USE_CASE_COLLECTION);
+		return useCase.getId();
+	}
+
+	public UseCase getTest(String testId) {
+		UseCase uc = mongoTemplate.findById(testId, UseCase.class, MongoUtility.USE_CASE_COLLECTION);
+		return uc;
 	}
 
 }

@@ -45,14 +45,23 @@ public class TestController {
 		return testRunnerService.getTests();
 	}
 
-	@RequestMapping(method=RequestMethod.POST, value="tests")
-	public void postTests(@RequestBody UseCase useCase) {
-		testCreationService.addTest(useCase);
+	@CrossOrigin
+	@RequestMapping(method=RequestMethod.POST, value="test")
+	@ResponseBody
+	public String postTests(@RequestBody UseCase useCase) {
+		String id = "\"" + testCreationService.addTest(useCase) + "\"";
+		return id;
 	}
 
 	@RequestMapping(method=RequestMethod.DELETE, value="tests")
 	public void deleteTests() {
 		testCreationService.dropUseCases();
+	}
+
+	@CrossOrigin
+	@RequestMapping(method=RequestMethod.GET, value="test/{id}")
+	public UseCase getTestById(@PathVariable("id") String testId) throws Exception {
+		return testCreationService.getTest(testId);
 	}
 
 	@CrossOrigin

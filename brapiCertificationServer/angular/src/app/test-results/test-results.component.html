@@ -7,20 +7,19 @@
       <a  [routerLink]="" (click)="selectTab(1)">Test Log</a>
     </li>
   </ul>
-  <div class="tab-content">
+  <div class="tab-content" style="min-height: 250px">
     <div id="results-tab" *ngIf="selectedTab(0)"  class="tab-pane fade in active">
       <ul class="list-group">
-        <li class="list-group-item" *ngFor="let result of results">
-          <a [routerLink]=""style="display: block">
+        <li class="list-group-item" *ngFor="let result of results; let i = index;">
+          <a routerLink="/results/{{result.batchID}}/{{i}}" style="display: block">
             <span [style.color]="result.pass? 'green': 'red'" style="font-weight: bold;">{{result.pass? 'PASS': 'FAIL'}}</span>
-            - {{result.errorMsg}}
+            - {{result.useCase.useCaseName}}
           </a>
         </li>
       </ul>
     </div>
     <div id="log-tab"  *ngIf="selectedTab(1)" class="tab-pane fade in active">
-      <textarea readonly rows="25" cols="108"> {{resultsLog}}
-    </textarea>
+      <pre>{{resultsLog}}</pre>
     </div>
   </div>
 </div>

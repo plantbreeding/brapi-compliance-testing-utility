@@ -1,0 +1,64 @@
+[
+{
+    "id" : 1, 
+    "method" : "GET",
+    "call" : "/calls",
+    "name" : "GET /calls",
+    "expectedReturnType" : "org.brapi.brapiCertificationServer.model.test.domain.Call",
+    "expectedReturnTypeHasList" : true,
+    "availibleParams" : [ 
+        "datatype", 
+        "page", 
+        "pageSize"
+    ]
+},
+{
+    "id" : 2, 
+    "method" : "GET",
+    "call" : "/crops",
+    "name" : "GET /crops",
+    "expectedReturnType" : "org.brapi.brapiCertificationServer.model.test.domain.String",
+    "expectedReturnTypeHasList" : true,
+    "availibleParams" : [
+        "page", 
+        "pageSize"
+    ]
+},
+{
+    "id" : 3, 
+    "method" : "GET",
+    "call" : "/germplasm-search",
+    "name" : "GET /germplasm-search",
+    "expectedReturnType" : "org.brapi.brapiCertificationServer.model.test.domain.Germplasm",
+    "expectedReturnTypeHasList" : true,
+    "availibleParams" : [ 
+        "germplasmPUI", 
+        "germplasmDbId", 
+        "germplasmName", 
+        "page", 
+        "pageSize"
+    ]
+},
+{
+    "id" : 4, 
+    "method" : "GET",
+    "call" : "/map/<mapDbId>",
+    "name" : "GET /map/<mapDbId>",
+    "expectedReturnType" : "org.brapi.brapiCertificationServer.model.test.domain.GenomeMapDetail",
+    "expectedReturnTypeHasList" : false,
+    "availibleParams" : [ 
+        "<mapDbId>"
+    ]
+},
+{
+    "id" : 5, 
+    "method" : "GET",
+    "call" : "/germplasm/<germplasmDbId>",
+    "name" : "GET /germplasm/<germplasmDbId>",
+    "expectedReturnType" : "org.brapi.brapiCertificationServer.model.test.domain.Germplasm",
+    "expectedReturnTypeHasList" : false,
+    "availibleParams" : [ 
+        "<germplasmDbId>"
+    ]
+}
+]

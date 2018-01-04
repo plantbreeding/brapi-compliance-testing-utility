@@ -2,10 +2,13 @@ package org.brapi.brapiCertificationServer.model.test.domain;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Sample {
 	private String plotId;
 	private String plantId;
 	private String takenBy;
+    @JsonFormat(pattern="yyyy-MM-dd")
 	private Date sampleDate;
 	private String sampleType;
 	private String tissueType;

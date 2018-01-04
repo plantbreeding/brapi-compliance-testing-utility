@@ -4,6 +4,5 @@
   </a>
 </div>
 
-<app-test-details-view *ngIf="!edit" [useCase]="useCase" (toggleEdit)="toggleEdit()"></app-test-details-view>
-<app-test-details-edit *ngIf="edit" [useCase]="useCase" (toggleEdit)="toggleEdit()"></app-test-details-edit>
-<pre>{{useCase | json}}</pre>
+<app-test-details-view *ngIf="!edit" [useCaseObs]="useCase" (toggleEdit)="toggleEdit()"></app-test-details-view>
+<app-test-details-edit *ngIf="edit" [useCaseObs]="useCase" (toggleEdit)="toggleEdit()"></app-test-details-edit>

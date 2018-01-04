@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Rx';
 
 import { TestAccessService } from '../service/test-access.service';
 import { UseCase } from '../model/use-case.class';
@@ -14,7 +15,7 @@ import { CallDefinition } from '../model/call-defintion';
 })
 export class TestDetailsComponent implements OnInit, OnDestroy {
   private sub: any;
-  useCase: UseCase;
+  useCase: Observable<UseCase>;
   edit: boolean;
 
   constructor(private testAccessService: TestAccessService, private location: Location, private route: ActivatedRoute) { }
@@ -24,16 +25,7 @@ export class TestDetailsComponent implements OnInit, OnDestroy {
       this.edit = params['edit'] === 'true';
       let useCaseId = params['id'];
        if(useCaseId){
-         this.testAccessService.getTest(useCaseId).subscribe((useCase: UseCase) => {
-          this.useCase = useCase;
-          
-          let callDef: CallDefinition = new CallDefinition();
-          callDef.method = 'method';
-          callDef.name = 'name';
-          callDef.call = 'call';
-          callDef.availibleParams = new Array();
-          this.useCase.tests[0].callDefinition = callDef;
-         });
+        this.useCase = this.testAccessService.getTest(useCaseId);
        }
     });
   }

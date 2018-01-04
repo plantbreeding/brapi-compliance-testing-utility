@@ -25,41 +25,6 @@ public class Call {
 	public void setMethods(List<String> methods) {
 		this.methods = methods;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((call == null) ? 0 : call.hashCode());
-		result = prime * result + ((dataTypes == null) ? 0 : dataTypes.hashCode());
-		result = prime * result + ((methods == null) ? 0 : methods.hashCode());
-		return result;
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Call other = (Call) obj;
-		if (call == null) {
-			if (other.call != null)
-				return false;
-		} else if (!call.equals(other.call))
-			return false;
-		if (dataTypes == null) {
-			if (other.dataTypes != null)
-				return false;
-		} else if (!dataTypes.equals(other.dataTypes))
-			return false;
-		if (methods == null) {
-			if (other.methods != null)
-				return false;
-		} else if (!methods.equals(other.methods))
-			return false;
-		return true;
-	}
 	
 	
 }

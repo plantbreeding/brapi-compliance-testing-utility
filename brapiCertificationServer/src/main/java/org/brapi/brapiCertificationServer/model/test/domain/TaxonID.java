@@ -1,6 +1,6 @@
 package org.brapi.brapiCertificationServer.model.test.domain;
 
-public class TaxonID {
+public class TaxonID implements BaseRestModel{
 	//TODO This class doesnt make sense to me, might be a product of loose typing
 	private String ncbiTaxon;
 	private String ciradTaxon;

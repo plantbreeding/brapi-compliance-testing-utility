@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { TestAccessService } from '../service/test-access.service';
 import { UseCaseResult } from '../model/use-case-result.class';
@@ -15,9 +16,10 @@ export class TestResultDetailsComponent implements OnInit {
   @Input() useCaseResult: UseCaseResult;
   useCaseResultIndex: number;
 
-  constructor(private testAccessService: TestAccessService, private route: ActivatedRoute) { }
+  constructor(private testAccessService: TestAccessService, private location: Location, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    console.log('made it');
     if (!this.useCaseResult) {
       this.sub = this.route.params.subscribe(params => {
         this.useCaseResultIndex = params['id'];
@@ -38,5 +40,9 @@ export class TestResultDetailsComponent implements OnInit {
 
   parse(raw:string){
     return JSON.parse(raw);
+  }
+
+  back(){
+    this.location.back();
   }
 }

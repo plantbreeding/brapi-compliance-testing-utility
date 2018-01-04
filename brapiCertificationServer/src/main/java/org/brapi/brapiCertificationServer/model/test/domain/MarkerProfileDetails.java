@@ -3,7 +3,7 @@ package org.brapi.brapiCertificationServer.model.test.domain;
 import java.util.Map;
 
 public class MarkerProfileDetails {
-	private String markerProfileDbId;
+	private String markerprofileDbId;
 	private String germplasmDbId;
 	private String uniqueDisplayName;
 	// TODO why is this missing private String sampleDbId;
@@ -11,10 +11,10 @@ public class MarkerProfileDetails {
 	private String analysisMethod;
 	private Map<String, String> data;
 	public String getMarkerProfileDbId() {
-		return markerProfileDbId;
+		return markerprofileDbId;
 	}
 	public void setMarkerProfileDbId(String markerProfileDbId) {
-		this.markerProfileDbId = markerProfileDbId;
+		this.markerprofileDbId = markerProfileDbId;
 	}
 	public String getGermplasmDbId() {
 		return germplasmDbId;

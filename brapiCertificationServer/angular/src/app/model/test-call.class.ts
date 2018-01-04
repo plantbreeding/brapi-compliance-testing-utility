@@ -1,4 +1,5 @@
 import { CallDefinition } from "./call-defintion";
+import { TestCallParam } from "./test-call-param";
 
 export class TestCall{
     id: String;
@@ -6,9 +7,9 @@ export class TestCall{
     callPath: String;
     expectedResultRaw: String;
     callDefinition: CallDefinition;
-    paramList: Map<string, string>;
+    paramList: TestCallParam[];
 
     constructor(){
-        this.paramList = new Map();
+        this.paramList = [];
     }
 }

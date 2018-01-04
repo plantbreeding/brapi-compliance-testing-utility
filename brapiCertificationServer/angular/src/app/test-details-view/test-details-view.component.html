@@ -9,7 +9,6 @@
     </div>
     <div *ngFor="let call of useCase.tests">
       <p>Call #{{call.useCaseIndexNumber + 1}}: /{{call.callPath}}</p>
-      <p>Expected Return Type: {{call.expectedResultType}}</p>
       <p>Expected Return Content:</p>
       <pre>{{parse(call.expectedResultRaw) | json}}</pre>
     </div>

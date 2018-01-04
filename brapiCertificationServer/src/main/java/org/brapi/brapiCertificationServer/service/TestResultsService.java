@@ -11,6 +11,7 @@ import java.util.UUID;
 import org.brapi.brapiCertificationServer.model.test.TestCall;
 import org.brapi.brapiCertificationServer.model.test.UseCase;
 import org.brapi.brapiCertificationServer.model.test.UseCaseResult;
+import org.brapi.brapiCertificationServer.model.test.UseCaseResultList;
 import org.brapi.brapiCertificationServer.model.test.RecordTestRequest;
 import org.brapi.brapiCertificationServer.model.test.RunUseCasesRequest;
 import org.brapi.brapiCertificationServer.model.test.TestResult;
@@ -43,11 +44,11 @@ public class TestResultsService {
 		this.mongoTemplate = mongoTemplate;
 	}
 
-	public List<UseCaseResult> getResults(String batchID) {
-		return mongoTemplate.find(Query.query(Criteria.where("batchID").is(batchID)), UseCaseResult.class, MongoUtility.TEST_RESULTS_COLLECTION);
+	public UseCaseResultList getResults(String batchID) {
+		return mongoTemplate.findOne(Query.query(Criteria.where("batchID").is(batchID)), UseCaseResultList.class, MongoUtility.TEST_RESULTS_COLLECTION);
 	}
 
-	public void storeResult(UseCaseResult result) {
+	public void storeResult(UseCaseResultList result) {
 		mongoTemplate.save(result, MongoUtility.TEST_RESULTS_COLLECTION);
 
 	}

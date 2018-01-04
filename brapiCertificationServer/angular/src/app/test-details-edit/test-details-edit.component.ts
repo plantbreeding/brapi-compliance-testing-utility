@@ -3,6 +3,8 @@ import { UseCase } from '../model/use-case.class';
 import { TestAccessService } from '../service/test-access.service';
 import { TestCall } from '../model/test-call.class';
 import { CallDefinition } from '../model/call-defintion';
+import { TestCallParam } from '../model/test-call-param';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-test-details-edit',
@@ -11,7 +13,8 @@ import { CallDefinition } from '../model/call-defintion';
 })
 export class TestDetailsEditComponent implements OnInit {
 
-  @Input() useCase: UseCase;
+  @Input() useCaseObs: Observable<UseCase>;
+  useCase: UseCase;
   @Output() toggleEdit: EventEmitter<boolean> = new EventEmitter();
   @Output() useCaseId: EventEmitter<string> = new EventEmitter();
   callDefs: CallDefinition[];
@@ -21,6 +24,9 @@ export class TestDetailsEditComponent implements OnInit {
   ngOnInit() {
     this.callDefs = new Array();
     this.buildCallDefsList();
+    this.useCaseObs.subscribe((useCase: UseCase) => {
+      this.useCase = useCase;
+    });
   }
 
   save() {
@@ -42,29 +48,57 @@ export class TestDetailsEditComponent implements OnInit {
   }
 
   callDefinitionChanged(call: TestCall) {
-    call.paramList = new Map();
+    call.paramList = [];
     this.buildCallPath(call);
   }
 
+  getParamValue(call: TestCall, param: string): string{
+    let entity = call.paramList.find((value) => {
+      return value.param == param;
+    })
+    if(entity){
+      return entity.value;
+    }else{
+      return '';
+    }
+  }
+
+  isCallDefSelected(callDef0: CallDefinition, callDef1: CallDefinition){
+    return callDef0 && callDef1 ? callDef0.id === callDef1.id : callDef0 === callDef1;
+  }
+
   onParamChange(value: string, param: string, call: TestCall) {
-    call.paramList.set(param, value);
+    let index = call.paramList.findIndex((entity, i, obj) => {
+      return entity.param == param;
+    });
+    if (value.length > 0) {
+      if (index >= 0) {
+        call.paramList[index].value = value;
+      } else {
+        call.paramList.push(new TestCallParam(param, value))
+      }
+    } else {
+      if (index >= 0) {
+        call.paramList.splice(index, 1);
+      }
+    }
     this.buildCallPath(call);
   }
 
   buildCallPath(call: TestCall) {
     call.callPath = call.callDefinition.call;
-    if (call.paramList.size > 0) {
+    if (call.paramList.length > 0) {
       let first = true;
-      call.paramList.forEach((value: string, key: string) => {
-        if (value.length > 0) {
-          if (key.startsWith('<') && key.endsWith('>')) {
-            call.callPath = call.callPath.replace(key, value);
+      call.paramList.forEach((entity) => {
+        if (entity.value.length > 0) {
+          if (entity.param.startsWith('<') && entity.param.endsWith('>')) {
+            call.callPath = call.callPath.replace(entity.param, entity.value);
           } else {
             if (first) {
               first = false;
-              call.callPath = call.callPath + '?' + key + '=' + value;
+              call.callPath = call.callPath + '?' + entity.param + '=' + entity.value;
             } else {
-              call.callPath = call.callPath + '&' + key + '=' + value;
+              call.callPath = call.callPath + '&' + entity.param + '=' + entity.value;
             }
           }
         }
@@ -73,22 +107,8 @@ export class TestDetailsEditComponent implements OnInit {
   }
 
   buildCallDefsList() {
-    this.callDefs.push(this.buildMockCallDef('GET', 'GET /calls', '/calls', 2));
-    this.callDefs.push(this.buildMockCallDef('GET', 'GET /crops', '/crops', 0));
-    let extraParam = this.buildMockCallDef('GET', 'GET /programs/<programDbId>', '/programs/<programDbId>', 3);
-    extraParam.availibleParams.push('<programDbId>');
-    this.callDefs.push(extraParam);
-  }
-
-  buildMockCallDef(method: string, name: string, call: string, params: number) {
-    let callDef: CallDefinition = new CallDefinition();
-    callDef.method = method;
-    callDef.name = name;
-    callDef.call = call;
-    callDef.availibleParams = new Array();
-    for (let i = 0; i < params; i++) {
-      callDef.availibleParams.push('param' + i);
-    }
-    return callDef;
+    this.testAccessService.getCallDefinitions().subscribe((data) => {
+      this.callDefs = data;
+    });
   }
 }

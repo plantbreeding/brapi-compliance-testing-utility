@@ -11,13 +11,13 @@
     <div *ngFor="let call of useCase.tests; let i = index">
       <p>Call #{{call.useCaseIndexNumber + 1}}: {{call.callPath}}</p>
       <p>Call:
-        <select [(ngModel)]="call.callDefinition" (change)="callDefinitionChanged(call)">
-          <option *ngFor="let callDef of callDefs" [ngValue]="callDef">{{ callDef.name }}</option>
+        <select [(ngModel)]="call.callDefinition" (change)="callDefinitionChanged(call)" [compareWith]="isCallDefSelected">
+          <option *ngFor="let callDef of callDefs" [ngValue]="callDef" [selected]="isCallDefSelected(call, callDef)">{{ callDef.name }}</option>
         </select>
       </p>
       <p>Parameters:</p>
       <p *ngFor="let param of call.callDefinition.availibleParams">{{param}}
-        <input type="text" (input)="onParamChange($event.target.value, param, call)" [value]="call.paramList.get(param) ? call.paramList.get(param) : ''"/>
+        <input type="text" (input)="onParamChange($event.target.value, param, call)" [value]="getParamValue(call, param)"/>
       </p>
       <p>Expected Return Content:</p>
       <textarea [(ngModel)]="call.expectedResultRaw" cols="100" rows="20"></textarea> 

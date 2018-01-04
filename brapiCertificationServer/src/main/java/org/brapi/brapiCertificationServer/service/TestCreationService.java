@@ -45,8 +45,6 @@ public class TestCreationService {
 	public String recordNewTest(RecordTestRequest recordRequest) {
 		String testID = UUID.randomUUID().toString();
 		TestCall newTest = new TestCall();
-		newTest.setExpectedResultType(recordRequest.getExpectedResultType());
-		newTest.setId(testID);
 		newTest.setCallPath(recordRequest.getTestCall());
 		newTest.setUseCaseIndexNumber(recordRequest.getChainIndexNumber());
 

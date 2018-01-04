@@ -6,6 +6,7 @@ import { RunTestRequest } from '../model/run-tests-request.class';
 import { UseCaseResult } from '../model/use-case-result.class';
 import { UseCase } from '../model/use-case.class';
 import { CallDefinition } from '../model/call-defintion';
+import { UseCaseResultList } from '../model/use-case-result-list.class';
 
 @Injectable()
 export class TestAccessService {
@@ -21,11 +22,14 @@ export class TestAccessService {
 
   getTestResults(batchId: string) {
     this.subscription = Observable.timer(0, 1000).switchMap(val => {
-      return this.http.get<UseCaseResult[]>(this.server + 'testresults/' + batchId);
-    }).subscribe((data: UseCaseResult[]) => {
-      this.resultsSubject.next(data);
-      if (data.length > 0) {
-        this.subscription.unsubscribe();
+      return this.http.get<UseCaseResultList>(this.server + 'testresults/' + batchId);
+    }).subscribe((data: UseCaseResultList) => {
+      if (data) {
+        this.resultsSubject.next(data.results);
+        console.log(data);
+        if (data.complete >= data.total) {
+          this.subscription.unsubscribe();
+        }
       }
     });
   }

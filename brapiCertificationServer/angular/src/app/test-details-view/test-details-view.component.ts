@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UseCase } from '../model/use-case.class';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-test-details-view',
@@ -8,19 +9,23 @@ import { UseCase } from '../model/use-case.class';
 })
 export class TestDetailsViewComponent implements OnInit {
 
-  @Input() useCase: UseCase;
+  @Input() useCaseObs: Observable<UseCase>;
+  useCase: UseCase;
   @Output() toggleEdit: EventEmitter<boolean> = new EventEmitter();
 
   constructor() { }
 
   ngOnInit() {
+    this.useCaseObs.subscribe((useCase: UseCase) => {
+      this.useCase = useCase;
+    });
   }
 
-  edit(){
+  edit() {
     this.toggleEdit.emit(true);
   }
 
-  parse(raw:string){
+  parse(raw: string) {
     return JSON.parse(raw);
   }
 }

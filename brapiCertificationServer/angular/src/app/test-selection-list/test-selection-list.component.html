@@ -7,7 +7,7 @@
         </td>
         <td>Select All</td>
         <td colspan="2">
-          <a routerLink="" (click)="createNewTest()" class="btn btn-default" style="float:right;">
+          <a (click)="createNewTest()" class="btn btn-default" style="float:right;">
             New Use Case
           </a>
         </td>
@@ -34,13 +34,13 @@
 <div class="pagination pull-right">
   <ul class="nav nav-pills">
     <li [ngClass]="{'disabled': currentPage == 0}">
-      <a [routerLink]="" (click)="prevPage()">« Prev</a>
+      <a (click)="prevPage()" class="btn">« Prev</a>
     </li>
     <li *ngFor="let n of range(pagedTests.length)" [ngClass]="{'active': n == currentPage}">
-      <a [routerLink]="" (click)="setPage(n)">{{n+1}}</a>
+      <a (click)="setPage(n)" class="btn">{{n+1}}</a>
     </li>
     <li [ngClass]="{'disabled': currentPage == pagedTests.length - 1}">
-      <a [routerLink]="" (click)="nextPage()">Next »</a>
+      <a (click)="nextPage()" class="btn">Next »</a>
     </li>
   </ul>
 </div>

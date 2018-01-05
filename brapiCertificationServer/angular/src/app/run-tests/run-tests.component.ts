@@ -22,7 +22,7 @@ export class RunTestsComponent implements OnInit, OnDestroy {
   constructor(private testAccessService: TestAccessService, private location: Location, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.baseURL = 'http://localhost:8081/brapi/v1/';
+    this.baseURL = 'http://localhost:8081/brapi/v1';
     this.sub = this.route.params.subscribe(params => {
        let testResultsBatchId = params['batchId'];
        if(testResultsBatchId){

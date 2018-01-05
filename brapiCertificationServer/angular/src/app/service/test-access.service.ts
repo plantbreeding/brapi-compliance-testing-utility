@@ -54,6 +54,10 @@ export class TestAccessService {
     return this.http.post<String>(this.server + 'test', useCase);
   }
 
+  deleteUseCase(id: string){
+    return this.http.delete(this.server + 'test/' + id);
+  }
+
   getCallDefinitions(): Observable<CallDefinition[]> {
     return this.http.get<CallDefinition[]>(this.server + 'calls');
   }

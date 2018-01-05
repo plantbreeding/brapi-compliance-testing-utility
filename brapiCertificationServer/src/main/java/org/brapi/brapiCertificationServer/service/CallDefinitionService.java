@@ -25,6 +25,10 @@ public class CallDefinitionService {
 		this.mongoTemplate = mongoTemplate;
 	}
 
+	public CallDefinition getCallDefinition(String id) {
+		return mongoTemplate.findById(id, CallDefinition.class, MongoUtility.CALL_DEFINITIONS);
+	}
+	
 	public List<CallDefinition> getAllCallDefinitions() {
 		return mongoTemplate.findAll(CallDefinition.class, MongoUtility.CALL_DEFINITIONS);
 	}

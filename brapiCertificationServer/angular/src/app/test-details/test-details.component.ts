@@ -17,15 +17,16 @@ export class TestDetailsComponent implements OnInit, OnDestroy {
   private sub: any;
   useCase: Observable<UseCase>;
   edit: boolean;
+  useCaseId: string;
 
   constructor(private testAccessService: TestAccessService, private location: Location, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       this.edit = params['edit'] === 'true';
-      let useCaseId = params['id'];
-       if(useCaseId){
-        this.useCase = this.testAccessService.getTest(useCaseId);
+      this.useCaseId = params['id'];
+       if(this.useCaseId){
+        this.useCase = this.testAccessService.getTest(this.useCaseId);
        }
     });
   }
@@ -40,5 +41,6 @@ export class TestDetailsComponent implements OnInit, OnDestroy {
 
   toggleEdit(){
     this.edit = !this.edit;
+    this.useCase = this.testAccessService.getTest(this.useCaseId);
   }
 }

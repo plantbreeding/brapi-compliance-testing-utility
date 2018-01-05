@@ -5,7 +5,7 @@
 </div>
 <div *ngIf="useCaseResult">
   <div *ngFor="let result of useCaseResult.results; let i = index;">
-    <div class="row">
+    <div class="row" style="font-size:  20px; margin-top:  20px;">
       <p>Call #{{useCaseResult.useCase.tests[i].useCaseIndexNumber + 1}}:
         <a href="{{useCaseResult.baseURL + useCaseResult.useCase.tests[i].callPath}}">{{useCaseResult.baseURL + useCaseResult.useCase.tests[i].callPath}}</a>
       </p>

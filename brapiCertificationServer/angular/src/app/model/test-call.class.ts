@@ -2,11 +2,11 @@ import { CallDefinition } from "./call-defintion";
 import { TestCallParam } from "./test-call-param";
 
 export class TestCall{
-    id: String;
+    id: string;
     useCaseIndexNumber: number;
-    callPath: String;
-    expectedResultRaw: String;
-    callDefinition: CallDefinition;
+    callPath: string;
+    expectedResultRaw: string;
+    callDefinitionID: string;
     paramList: TestCallParam[];
 
     constructor(){

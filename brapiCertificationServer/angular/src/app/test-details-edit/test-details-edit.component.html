@@ -3,27 +3,43 @@
     <div style="margin: 20px 0">
       <h3>Use Case:
         <input type="text" [(ngModel)]="useCase.useCaseName" />
+        <a (click)="delete()" class="btn btn-default" style="float:right;">
+          Delete
+        </a>
         <a (click)="save()" class="btn btn-default" style="float:right;">
           Save
         </a>
       </h3>
     </div>
     <div *ngFor="let call of useCase.tests; let i = index">
-      <p>Call #{{call.useCaseIndexNumber + 1}}: {{call.callPath}}</p>
-      <p>Call:
-        <select [(ngModel)]="call.callDefinition" (change)="callDefinitionChanged(call)" [compareWith]="isCallDefSelected">
-          <option *ngFor="let callDef of callDefs" [ngValue]="callDef" [selected]="isCallDefSelected(call, callDef)">{{ callDef.name }}</option>
-        </select>
-      </p>
-      <p>Parameters:</p>
-      <p *ngFor="let param of call.callDefinition.availibleParams">{{param}}
-        <input type="text" (input)="onParamChange($event.target.value, param, call)" [value]="getParamValue(call, param)"/>
-      </p>
-      <p>Expected Return Content:</p>
-      <textarea [(ngModel)]="call.expectedResultRaw" cols="100" rows="20"></textarea> 
+      <div style="font-size:  20px; margin-top:  20px;">
+        <p>Call #{{call.useCaseIndexNumber + 1}}: {{call.callPath}}</p>
+      </div>
+      <div>
+        <p>Call:
+          <select [(ngModel)]="call.callDefinitionID" (change)="callDefinitionChanged(call)">
+            <option *ngFor="let callDef of callDefs" [ngValue]="callDef.id">{{ callDef.name }}</option>
+          </select>
+        </p>
+      </div>
+      <div>
+        <p>Parameters:</p>
+        <div *ngFor="let param of findCallDefById(call.callDefinitionID).availibleParams" class="row">
+          <div class="col-xs-2" style="margin-left: 20px">
+          <p >{{param}}</p>
+        </div>
+        <div class="col-xs-5">
+          <input type="text" (input)="onParamChange($event.target.value, param, call)" [value]="getParamValue(call, param)">
+        </div>
+        </div>
+      </div>
+      <div>
+        <p>Expected Return Content:</p>
+        <textarea [(ngModel)]="call.expectedResultRaw" cols="100" rows="20"></textarea>
+      </div>
     </div>
     <a (click)="addCall()" class="btn btn-default">
-        Add Call
-      </a>
+      Add Call
+    </a>
   </div>
 </div>

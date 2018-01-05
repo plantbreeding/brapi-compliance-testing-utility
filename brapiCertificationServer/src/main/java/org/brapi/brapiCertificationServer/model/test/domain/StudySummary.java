@@ -107,4 +107,27 @@ public class StudySummary {
 	public void setAdditionalInfo(Map<String, String> additionalInfo) {
 		this.additionalInfo = additionalInfo;
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((studyDbId == null) ? 0 : studyDbId.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		StudySummary other = (StudySummary) obj;
+		if (studyDbId == null) {
+			if (other.studyDbId != null)
+				return false;
+		} else if (!studyDbId.equals(other.studyDbId))
+			return false;
+		return true;
+	}
 }

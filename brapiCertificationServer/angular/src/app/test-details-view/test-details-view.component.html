@@ -8,9 +8,13 @@
       </h3>
     </div>
     <div *ngFor="let call of useCase.tests">
-      <p>Call #{{call.useCaseIndexNumber + 1}}: /{{call.callPath}}</p>
-      <p>Expected Return Content:</p>
-      <pre>{{parse(call.expectedResultRaw) | json}}</pre>
+      <div style="font-size:  20px; margin-top:  20px;">
+        <p>Call #{{call.useCaseIndexNumber + 1}}: {{call.callPath}}</p>
+      </div>
+      <div>
+        <p>Expected Return Content:</p>
+        <pre style="max-height: 360px">{{parse(call.expectedResultRaw) | json}}</pre>
+      </div>
     </div>
   </div>
 </div>

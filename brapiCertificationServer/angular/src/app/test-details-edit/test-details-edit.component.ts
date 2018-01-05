@@ -1,10 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {Router} from '@angular/router';
+import { Observable } from 'rxjs/Rx';
+
 import { UseCase } from '../model/use-case.class';
 import { TestAccessService } from '../service/test-access.service';
 import { TestCall } from '../model/test-call.class';
 import { CallDefinition } from '../model/call-defintion';
 import { TestCallParam } from '../model/test-call-param';
-import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-test-details-edit',
@@ -19,30 +21,37 @@ export class TestDetailsEditComponent implements OnInit {
   @Output() useCaseId: EventEmitter<string> = new EventEmitter();
   callDefs: CallDefinition[];
 
-  constructor(private testAccessService: TestAccessService) { }
+  constructor(private testAccessService: TestAccessService, private router: Router) { }
 
   ngOnInit() {
     this.callDefs = new Array();
-    this.buildCallDefsList();
-    this.useCaseObs.subscribe((useCase: UseCase) => {
-      this.useCase = useCase;
+    this.testAccessService.getCallDefinitions().subscribe((data) => {
+      this.callDefs = data.sort(CallDefinition.sort);
+      this.useCaseObs.subscribe((useCase: UseCase) => {
+        this.useCase = useCase;
+      });
     });
   }
 
   save() {
-    this.toggleEdit.emit(true);
     this.testAccessService.saveTest(this.useCase).subscribe((id: string) => {
-      this.useCaseId.emit(id);
+      this.toggleEdit.emit(true);
     },
       (err: string) => {
         console.log('something bad happened');
       });
   }
 
+  delete(){
+    this.testAccessService.deleteUseCase(this.useCase.id).subscribe(() =>{
+      this.router.navigate(['/runtests']);
+    });
+  }
+
   addCall() {
     let testCall: TestCall = new TestCall();
     testCall.useCaseIndexNumber = this.useCase.tests.length;
-    testCall.callDefinition = this.callDefs[0];
+    testCall.callDefinitionID = this.callDefs[0].id;
     this.buildCallPath(testCall);
     this.useCase.tests.push(testCall);
   }
@@ -61,10 +70,6 @@ export class TestDetailsEditComponent implements OnInit {
     }else{
       return '';
     }
-  }
-
-  isCallDefSelected(callDef0: CallDefinition, callDef1: CallDefinition){
-    return callDef0 && callDef1 ? callDef0.id === callDef1.id : callDef0 === callDef1;
   }
 
   onParamChange(value: string, param: string, call: TestCall) {
@@ -86,29 +91,39 @@ export class TestDetailsEditComponent implements OnInit {
   }
 
   buildCallPath(call: TestCall) {
-    call.callPath = call.callDefinition.call;
+    let callPath: string = this.findCallDefById(call.callDefinitionID).call;
     if (call.paramList.length > 0) {
       let first = true;
       call.paramList.forEach((entity) => {
         if (entity.value.length > 0) {
-          if (entity.param.startsWith('<') && entity.param.endsWith('>')) {
-            call.callPath = call.callPath.replace(entity.param, entity.value);
+          if (entity.param.startsWith('{') && entity.param.endsWith('}')) {
+            callPath = callPath.replace(entity.param, entity.value);
           } else {
             if (first) {
               first = false;
-              call.callPath = call.callPath + '?' + entity.param + '=' + entity.value;
+              callPath = callPath + '?' + entity.param + '=' + entity.value;
             } else {
-              call.callPath = call.callPath + '&' + entity.param + '=' + entity.value;
+              callPath = callPath + '&' + entity.param + '=' + entity.value;
             }
           }
         }
       })
     }
+    call.callPath = encodeURI(callPath);
   }
 
   buildCallDefsList() {
     this.testAccessService.getCallDefinitions().subscribe((data) => {
       this.callDefs = data;
     });
+  }
+
+  findCallDefById(id: string) : CallDefinition {
+    console.log(id);
+    let calldef = this.callDefs.find((value: CallDefinition) => {
+      return value.id == id;
+    });
+    console.log(calldef);
+    return calldef;
   }
 }

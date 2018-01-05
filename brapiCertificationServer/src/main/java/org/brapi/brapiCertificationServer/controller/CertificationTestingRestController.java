@@ -1,24 +1,18 @@
 package org.brapi.brapiCertificationServer.controller;
 
-import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
 import org.brapi.brapiCertificationServer.model.test.UseCase;
-import org.brapi.brapiCertificationServer.model.test.UseCaseResult;
 import org.brapi.brapiCertificationServer.model.test.UseCaseResultList;
 import org.brapi.brapiCertificationServer.model.test.CallDefinition;
 import org.brapi.brapiCertificationServer.model.test.RecordTestRequest;
 import org.brapi.brapiCertificationServer.model.test.RunUseCasesRequest;
-import org.brapi.brapiCertificationServer.model.test.TestResult;
 import org.brapi.brapiCertificationServer.service.CallDefinitionService;
 import org.brapi.brapiCertificationServer.service.TestCreationService;
 import org.brapi.brapiCertificationServer.service.TestResultsService;
 import org.brapi.brapiCertificationServer.service.TestRunnerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -61,6 +55,12 @@ public class CertificationTestingRestController {
 	@RequestMapping(method=RequestMethod.DELETE, value="tests")
 	public void deleteTests() {
 		testCreationService.dropUseCases();
+	}
+
+	@CrossOrigin
+	@RequestMapping(method=RequestMethod.DELETE, value="test/{id}")
+	public void deleteTest(@PathVariable("id") String testId) {
+		testCreationService.dropUseCase(testId);
 	}
 
 	@CrossOrigin

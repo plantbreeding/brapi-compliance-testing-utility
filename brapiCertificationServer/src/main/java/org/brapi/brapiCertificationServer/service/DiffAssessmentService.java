@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.brapi.brapiCertificationServer.model.test.metadata.GenericResults;
-import org.brapi.brapiCertificationServer.model.test.metadata.GenricResultsInterface;
 import org.springframework.stereotype.Service;
 
 import de.danielbechler.diff.ObjectDiffer;
@@ -21,7 +20,7 @@ public class DiffAssessmentService {
 		differ = ObjectDifferBuilder.buildDefault();
 	}
 
-	public List<String> compareObjects(final GenericResults actual, final GenericResults expected) {
+	public List<String> compareObjects(final GenericResults<?> actual, final GenericResults<?> expected) {
 
 		DiffNode diffRoot = differ.compare(actual, expected);
 

@@ -1,64 +1,614 @@
 [
-{
-    "id" : 1, 
-    "method" : "GET",
-    "call" : "/calls",
-    "name" : "GET /calls",
-    "expectedReturnType" : "org.brapi.brapiCertificationServer.model.test.domain.Call",
-    "expectedReturnTypeHasList" : true,
-    "availibleParams" : [ 
-        "datatype", 
-        "page", 
-        "pageSize"
-    ]
-},
-{
-    "id" : 2, 
-    "method" : "GET",
-    "call" : "/crops",
-    "name" : "GET /crops",
-    "expectedReturnType" : "org.brapi.brapiCertificationServer.model.test.domain.String",
-    "expectedReturnTypeHasList" : true,
-    "availibleParams" : [
-        "page", 
-        "pageSize"
-    ]
-},
-{
-    "id" : 3, 
-    "method" : "GET",
-    "call" : "/germplasm-search",
-    "name" : "GET /germplasm-search",
-    "expectedReturnType" : "org.brapi.brapiCertificationServer.model.test.domain.Germplasm",
-    "expectedReturnTypeHasList" : true,
-    "availibleParams" : [ 
-        "germplasmPUI", 
-        "germplasmDbId", 
-        "germplasmName", 
-        "page", 
-        "pageSize"
-    ]
-},
-{
-    "id" : 4, 
-    "method" : "GET",
-    "call" : "/map/<mapDbId>",
-    "name" : "GET /map/<mapDbId>",
-    "expectedReturnType" : "org.brapi.brapiCertificationServer.model.test.domain.GenomeMapDetail",
-    "expectedReturnTypeHasList" : false,
-    "availibleParams" : [ 
-        "<mapDbId>"
-    ]
-},
-{
-    "id" : 5, 
-    "method" : "GET",
-    "call" : "/germplasm/<germplasmDbId>",
-    "name" : "GET /germplasm/<germplasmDbId>",
-    "expectedReturnType" : "org.brapi.brapiCertificationServer.model.test.domain.Germplasm",
-    "expectedReturnTypeHasList" : false,
-    "availibleParams" : [ 
-        "<germplasmDbId>"
-    ]
-}
+	{
+		"id": "1",
+		"method": "GET",
+		"call": "/calls",
+		"name": "GET /calls",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Call",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": [
+			"datatype",
+			"page",
+			"pageSize"
+		]
+	},
+	{
+		"id": "2",
+		"method": "GET",
+		"call": "/germplasm-search",
+		"name": "GET /germplasm-search",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Germplasm",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": [
+			"germplasmPUI",
+			"germplasmDbId",
+			"germplasmSpecies",
+			"germplasmGenus",
+			"germplasmNames",
+			"accessionNumbers",
+			"pageSize",
+			"page"
+		]
+	},
+	{
+		"id": "3",
+		"method": "POST",
+		"call": "/germplasm-search",
+		"name": "POST /germplasm-search",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Germplasm",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": []
+	},
+	{
+		"id": "4",
+		"method": "GET",
+		"call": "/germplasm/{germplasmDbId}",
+		"name": "GET /germplasm/{germplasmDbId}",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Germplasm",
+		"expectedReturnTypeHasList": false,
+		"availibleParams": [
+			"{germplasmDbId}"
+		]
+	},
+	{
+		"id": "5",
+		"method": "GET",
+		"call": "/germplasm/{germplasmDbId}/pedigree",
+		"name": "GET /germplasm/{germplasmDbId}/pedigree",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Pedigree",
+		"expectedReturnTypeHasList": false,
+		"availibleParams": [
+			"{germplasmDbId}",
+			"notation"
+		]
+	},
+	{
+		"id": "6",
+		"method": "GET",
+		"call": "/germplasm/{germplasmDbId}/markerProfiles",
+		"name": "GET /germplasm/{germplasmDbId}/markerProfiles",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.MarkerProfileKeys",
+		"expectedReturnTypeHasList": false,
+		"availibleParams": [
+			"{germplasmDbId}"
+		]
+	},
+	{
+		"id": "7",
+		"method": "GET",
+		"call": "/attributes",
+		"name": "GET /attributes",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.GermplasmAttributeDefinition",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": [
+			"attributeCategoryDbId",
+			"page",
+			"pageSize"
+		]
+	},
+	{
+		"id": "8",
+		"method": "GET",
+		"call": "/attributes/categories",
+		"name": "GET /attributes/categories",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.GermplasmAttributeCategory",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": [
+			"page",
+			"pageSize"
+		]
+	},
+	{
+		"id": "9",
+		"method": "GET",
+		"call": "/germplasm/{germplasmDbId}/attributes",
+		"name": "GET /germplasm/{germplasmDbId}/attributes",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.GermplasmAttributeValuesWrapper",
+		"expectedReturnTypeHasList": false,
+		"availibleParams": [
+			"{germplasmDbId}",
+			"attributeList",
+			"page",
+			"pageSize"
+		]
+	},
+	{
+		"id": "10",
+		"method": "GET",
+		"call": "/markers",
+		"name": "GET /markers",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Marker",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": [
+			"name",
+			"type",
+			"matchMethod",
+			"include",
+			"page",
+			"pageSize"
+		]
+	},
+	{
+		"id": "11",
+		"method": "GET",
+		"call": "/markers/{markerDbId}",
+		"name": "GET /markers/{markerDbId}",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Marker",
+		"expectedReturnTypeHasList": false,
+		"availibleParams": [
+			"{markerDbId}"
+		]
+	},
+	{
+		"id": "12",
+		"method": "GET",
+		"call": "/markerProfiles",
+		"name": "GET /markerProfiles",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.MarkerProfileSummary",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": [
+			"germplasmDbId",
+			"studyDbId",
+			"sampleDbId",
+			"extractDbId",
+			"methodDbId",
+			"page",
+			"pageSize"
+		]
+	},
+	{
+		"id": "13",
+		"method": "GET",
+		"call": "/markerProfiles/{markerprofileDbId}",
+		"name": "GET /markerProfiles/{markerprofileDbId}",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.MarkerProfileDetails",
+		"expectedReturnTypeHasList": false,
+		"availibleParams": [
+			"{markerprofileDbId}",
+			"expandHomozygotes",
+			"unknownString",
+			"sepPhased",
+			"sepUnphased",
+			"page",
+			"pageSize"
+		]
+	},
+	{
+		"id": "14",
+		"method": "GET",
+		"call": "/allelematrix-search",
+		"name": "GET /allelematrix-search",
+		"expectedReturnType": "java.util.ArrayList",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": [
+			"format",
+			"expandHomozygotes",
+			"unknownString",
+			"sepPhased",
+			"sepUnphased",
+			"page",
+			"pageSize"
+		]
+	},
+	{
+		"id": "15",
+		"method": "POST",
+		"call": "/allelematrix-search",
+		"name": "POST /allelematrix-search",
+		"expectedReturnType": "java.util.ArrayList",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": []
+	},
+	{
+		"id": "16",
+		"method": "GET",
+		"call": "/programs",
+		"name": "GET /programs",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Program",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": [
+			"programName",
+			"abbreviation",
+			"page",
+			"pageSize"
+		]
+	},
+	{
+		"id": "17",
+		"method": "GET",
+		"call": "/crops",
+		"name": "GET /crops",
+		"expectedReturnType": "java.lang.String",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": [
+			"page",
+			"pageSize"
+		]
+	},
+	{
+		"id": "18",
+		"method": "GET",
+		"call": "/trials",
+		"name": "GET /trials",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.TrialSummary",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": [
+			"page",
+			"pageSize"
+		]
+	},
+	{
+		"id": "19",
+		"method": "GET",
+		"call": "/trials/{trialsDbId}",
+		"name": "GET /trials/{trialsDbId}",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.TrialSummaryWithContact",
+		"expectedReturnTypeHasList": false,
+		"availibleParams": [
+			"{trialsDbId}"
+		]
+	},
+	{
+		"id": "20",
+		"method": "GET",
+		"call": "/seasons",
+		"name": "GET /seasons",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Season",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": [
+			"year",
+			"page",
+			"pageSize"
+		]
+	},
+	{
+		"id": "21",
+		"method": "GET",
+		"call": "/studyTypes",
+		"name": "GET /studyTypes",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.StudyType",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": [
+			"page",
+			"pageSize"
+		]
+	},
+	{
+		"id": "22",
+		"method": "GET",
+		"call": "/studies-search",
+		"name": "GET /studies-search",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.StudySummary",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": [
+			"studyType",
+			"programDbId",
+			"locationDbId",
+			"seasonDbId",
+			"germplasmDbIds",
+			"observationVariableDbIds",
+			"active",
+			"page",
+			"pageSize"
+		]
+	},
+	{
+		"id": "23",
+		"method": "POST",
+		"call": "/studies-search",
+		"name": "POST /studies-search",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.StudySummary",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": []
+	},
+	{
+		"id": "24",
+		"method": "GET",
+		"call": "/studies/{studiesDbId}",
+		"name": "GET /studies/{studiesDbId}",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Study",
+		"expectedReturnTypeHasList": false,
+		"availibleParams": [
+			"{studiesDbId}"
+		]
+	},
+	{
+		"id": "25",
+		"method": "GET",
+		"call": "/studies/{studiesDbId}/observationVariables",
+		"name": "GET /studies/{studiesDbId}/observationVariables",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.StudyObservationVariable",
+		"expectedReturnTypeHasList": false,
+		"availibleParams": [
+			"{studiesDbId}"
+		]
+	},
+	{
+		"id": "26",
+		"method": "GET",
+		"call": "/studies/{studiesDbId}/germplasm",
+		"name": "GET /studies/{studiesDbId}/germplasm",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.StudyGermplasm",
+		"expectedReturnTypeHasList": false,
+		"availibleParams": [
+			"{studiesDbId}"
+		]
+	},
+	{
+		"id": "27",
+		"method": "GET",
+		"call": "/observationLevels",
+		"name": "GET /observationLevels",
+		"expectedReturnType": "java.lang.String",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": [
+			"page",
+			"pageSize"
+		]
+	},
+	{
+		"id": "28",
+		"method": "GET",
+		"call": "/studies/{studiesDbId}/observationunits",
+		"name": "GET /studies/{studiesDbId}/observationunits",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.StudyObservation",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": [
+			"{studiesDbId}",
+			"observationLevel",
+			"page",
+			"pageSize"
+		]
+	},
+	{
+		"id": "29",
+		"method": "POST",
+		"call": "/studies/{studiesDbId}/observationunits",
+		"name": "POST /studies/{studiesDbId}/observationunits",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.StudyObservation",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": [
+			"{studiesDbId}"
+		]
+	},
+	{
+		"id": "30",
+		"method": "GET",
+		"call": "/studies/{studiesDbId}/table",
+		"name": "GET /studies/{studiesDbId}/table",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.StudyObservationUnitTable",
+		"expectedReturnTypeHasList": false,
+		"availibleParams": [
+			"{studiesDbId}",
+			"format"
+		]
+	},
+	{
+		"id": "31",
+		"method": "POST",
+		"call": "/studies/{studiesDbId}/table",
+		"name": "POST /studies/{studiesDbId}/table",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.StudyObservationUnitTable",
+		"expectedReturnTypeHasList": false,
+		"availibleParams": [
+			"{studiesDbId}"
+		]
+	},
+	{
+		"id": "32",
+		"method": "GET",
+		"call": "/studies/{studiesDbId}/layout",
+		"name": "GET /studies/{studiesDbId}/layout",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.StudyPlotLayout",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": [
+			"{studiesDbId}",
+			"page",
+			"pageSize"
+		]
+	},
+	{
+		"id": "33",
+		"method": "GET",
+		"call": "/studies/{studiesDbId}/observations",
+		"name": "GET /studies/{studiesDbId}/observations",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.ObservationUnit",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": [
+			"{studiesDbId}",
+			"observationVariableDbIds",
+			"page",
+			"pageSize"
+		]
+	},
+	{
+		"id": "34",
+		"method": "POST",
+		"call": "/phenotypes-search",
+		"name": "POST /phenotypes-search",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Phenotype",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": []
+	},
+	{
+		"id": "35",
+		"method": "GET",
+		"call": "/traits",
+		"name": "GET /traits",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.TraitSummary",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": [
+			"page",
+			"pageSize"
+		]
+	},
+	{
+		"id": "36",
+		"method": "GET",
+		"call": "/traits/{traitDbId}",
+		"name": "GET /traits/{traitDbId}",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.TraitSummary",
+		"expectedReturnTypeHasList": false,
+		"availibleParams": [
+			"{traitDbId}"
+		]
+	},
+	{
+		"id": "37",
+		"method": "GET",
+		"call": "/variables/datatypes",
+		"name": "GET /variables/datatypes",
+		"expectedReturnType": "java.lang.String",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": [
+			"page",
+			"pageSize"
+		]
+	},
+	{
+		"id": "38",
+		"method": "GET",
+		"call": "/variables",
+		"name": "GET /variables",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.ObservationVariable",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": [
+			"traitClass",
+			"page",
+			"pageSize"
+		]
+	},
+	{
+		"id": "39",
+		"method": "GET",
+		"call": "/variables/{observationVariableDbId}",
+		"name": "GET /variables/{observationVariableDbId}",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.ObservationVariable",
+		"expectedReturnTypeHasList": false,
+		"availibleParams": [
+			"{observationVariableDbId}"
+		]
+	},
+	{
+		"id": "40",
+		"method": "POST",
+		"call": "/variables-search",
+		"name": "POST /variables-search",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.ObservationVariable",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": []
+	},
+	{
+		"id": "41",
+		"method": "GET",
+		"call": "/ontologies",
+		"name": "GET /ontologies",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Ontology",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": [
+			"page",
+			"pageSize"
+		]
+	},
+	{
+		"id": "42",
+		"method": "GET",
+		"call": "/maps",
+		"name": "GET /maps",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.GenomeMapSummary",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": [
+			"speciesId",
+			"type",
+			"page",
+			"pageSize"
+		]
+	},
+	{
+		"id": "43",
+		"method": "GET",
+		"call": "/maps/{mapDbId}",
+		"name": "GET /maps/{mapDbId}",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.GenomeMapDetail",
+		"expectedReturnTypeHasList": false,
+		"availibleParams": [
+			"{mapDbId}"
+		]
+	},
+	{
+		"id": "44",
+		"method": "GET",
+		"call": "/maps/{mapDbId}/positions",
+		"name": "GET /maps/{mapDbId}/positions",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.GenomeMapData",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": [
+			"{mapDbId}",
+			"linkageGroupId",
+			"minPosition",
+			"maxPosition",
+			"page",
+			"pageSize"
+		]
+	},
+	{
+		"id": "45",
+		"method": "GET",
+		"call": "/maps/{mapDbId}/positions/{linkageGroupId}",
+		"name": "GET /maps/{mapDbId}/positions/{linkageGroupId}",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.GenomeMapData",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": [
+			"{mapDbId}",
+			"{linkageGroupId}",
+			"minPosition",
+			"maxPosition",
+			"page",
+			"pageSize"
+		]
+	},
+	{
+		"id": "46",
+		"method": "GET",
+		"call": "/locations",
+		"name": "GET /locations",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Location",
+		"expectedReturnTypeHasList": true,
+		"availibleParams": [
+			"locationType",
+			"page",
+			"pageSize"
+		]
+	},
+	{
+		"id": "47",
+		"method": "GET",
+		"call": "/locations/{locationsDbId}",
+		"name": "GET /locations/{locationsDbId}",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Location",
+		"expectedReturnTypeHasList": false,
+		"availibleParams": [
+			"{locationsDbId}"
+		]
+	},
+	{
+		"id": "48",
+		"method": "PUT",
+		"call": "/samples",
+		"name": "PUT /samples",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.SampleDbIdWrapper",
+		"expectedReturnTypeHasList": false,
+		"availibleParams": []
+	},
+	{
+		"id": "49",
+		"method": "GET",
+		"call": "/samples/{samplesDbId}",
+		"name": "GET /samples/{samplesDbId}",
+		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.SampleDetail",
+		"expectedReturnTypeHasList": false,
+		"availibleParams": [
+			"{samplesDbId}"
+		]
+	}
 ]

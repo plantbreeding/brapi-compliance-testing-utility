@@ -5,7 +5,7 @@ import java.util.List;
 public class TestCall {
 	private int useCaseIndexNumber;
 	private String callPath;
-	private CallDefinition callDefinition;
+	private String callDefinitionID;
 	private String expectedResultRaw;
 	private List<TestCallParam> paramList;
 	
@@ -27,17 +27,17 @@ public class TestCall {
 	public void setExpectedResultRaw(String expectedResultRaw) {
 		this.expectedResultRaw = expectedResultRaw;
 	}
-	public CallDefinition getCallDefinition() {
-		return callDefinition;
-	}
-	public void setCallDefinition(CallDefinition callDefinition) {
-		this.callDefinition = callDefinition;
-	}
 	public List<TestCallParam> getParamList() {
 		return paramList;
 	}
 	public void setParamList(List<TestCallParam> paramList) {
 		this.paramList = paramList;
+	}
+	public String getCallDefinitionID() {
+		return callDefinitionID;
+	}
+	public void setCallDefinitionID(String callDefinitionID) {
+		this.callDefinitionID = callDefinitionID;
 	}
 		
 }

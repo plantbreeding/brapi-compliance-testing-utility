@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 import { UseCase } from '../model/use-case.class';
 import { TestAccessService } from '../service/test-access.service';
+import { AlertService } from '../service/alert.service';
 
 @Component({
   selector: 'app-test-selection-list',
@@ -17,14 +18,14 @@ export class TestSelectionListComponent implements OnInit {
   currentPage: number;
   isSelectAll: boolean;
 
-  constructor(private testAccessService: TestAccessService, private router: Router) { }
+  constructor(private testAccessService: TestAccessService, private router: Router, private alertService: AlertService) { }
 
   ngOnInit() {
     this.buildPagedTests();
     this.currentPage = 0;
 
     this.isSelectAll = true;
-    for(let test of this.testList){
+    for (let test of this.testList) {
       this.isSelectAll = test.selected && this.isSelectAll;
     }
   }
@@ -36,15 +37,15 @@ export class TestSelectionListComponent implements OnInit {
     }
   }
 
-  selectAll(){
+  selectAll() {
     this.isSelectAll = !this.isSelectAll;
-    for(let test of this.testList){
+    for (let test of this.testList) {
       test.selected = this.isSelectAll;
     }
     this.selectedTests.emit(this.testList);
   }
-  toggleTest(test: UseCase){
-    if(this.isSelectAll){
+  toggleTest(test: UseCase) {
+    if (this.isSelectAll) {
       this.isSelectAll = false;
     }
     test.selected = !test.selected;
@@ -66,10 +67,13 @@ export class TestSelectionListComponent implements OnInit {
   range(n: number): number[] {
     return Array(n).fill(0).map((x, i) => i);
   }
-  createNewTest(){
+  createNewTest() {
     let useCase: UseCase = new UseCase();
-    this.testAccessService.saveTest(useCase).subscribe(id =>{
+    this.testAccessService.saveTest(useCase).subscribe(id => {
+      console.log(id);
       this.router.navigate(['/test', id, true]);
+    }, err => {
+      this.alertService.handleHTTPError(err);
     })
   }
 }

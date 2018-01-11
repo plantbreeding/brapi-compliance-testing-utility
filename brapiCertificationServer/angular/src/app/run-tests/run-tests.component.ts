@@ -7,11 +7,12 @@ import { RunTestRequest } from '../model/run-tests-request.class';
 import { Observable } from 'rxjs/Observable';
 import { UseCase } from '../model/use-case.class';
 import { UseCaseResult } from '../model/use-case-result.class';
+import { AlertService } from '../service/alert.service';
 
 @Component({
   selector: 'app-run-tests',
   templateUrl: './run-tests.component.html',
-  providers: [ TestAccessService ],
+  providers: [TestAccessService, AlertService],
   styleUrls: ['./run-tests.component.css']
 })
 export class RunTestsComponent implements OnInit, OnDestroy {
@@ -19,15 +20,15 @@ export class RunTestsComponent implements OnInit, OnDestroy {
   testIds: String[] = new Array();
   baseURL: String;
 
-  constructor(private testAccessService: TestAccessService, private location: Location, private route: ActivatedRoute) { }
+  constructor(private testAccessService: TestAccessService, private location: Location, private route: ActivatedRoute, private alertService: AlertService) { }
 
   ngOnInit() {
     this.baseURL = 'http://localhost:8081/brapi/v1';
     this.sub = this.route.params.subscribe(params => {
-       let testResultsBatchId = params['batchId'];
-       if(testResultsBatchId){
-         this.testAccessService.getTestResults(testResultsBatchId);
-       }
+      let testResultsBatchId = params['batchId'];
+      if (testResultsBatchId) {
+        this.testAccessService.getTestResults(testResultsBatchId);
+      }
     });
   }
 
@@ -35,20 +36,19 @@ export class RunTestsComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  setTestIds(ids: String[]){
+  setTestIds(ids: String[]) {
     this.testIds = ids;
   }
 
-  runTest(){
+  runTest() {
     let runReq: RunTestRequest = new RunTestRequest();
     runReq.testCaseIds = this.testIds;
     runReq.baseURL = this.baseURL;
     this.testAccessService.runTests(runReq).subscribe((batchId: string) => {
       this.location.go('runtests/' + batchId);
       this.testAccessService.getTestResults(batchId);
-    },
-    err => {
-      console.log('something bad happened');
+    }, err => {
+      this.alertService.handleHTTPError(err);
     })
   }
 }

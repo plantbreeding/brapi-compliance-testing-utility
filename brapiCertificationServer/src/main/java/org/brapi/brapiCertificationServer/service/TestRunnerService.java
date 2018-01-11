@@ -16,6 +16,7 @@ import org.brapi.brapiCertificationServer.model.test.metadata.GenericResultsData
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -43,7 +44,7 @@ public class TestRunnerService {
 	}
 
 	@Async
-	public void runTests(RunUseCasesRequest request, String batchID) {
+	public void runTests(RunUseCasesRequest request, String batchID, String authToken) {
 		initResultsList(request.getTestCaseIds().size(), batchID);
 
 		for (String id : request.getTestCaseIds()) {
@@ -61,7 +62,7 @@ public class TestRunnerService {
 				for (TestCall test : useCase.getTests()) {
 					TestResult result = new TestResult();
 					try {
-						result = runTest(test, request.getBaseURL());
+						result = runTest(test, request.getBaseURL(), authToken);
 					} catch (Exception e) {
 						result.setErrorMsg(e.getMessage());
 						result.setPass(false);
@@ -89,11 +90,11 @@ public class TestRunnerService {
 		testResultsService.storeResult(results);
 	}
 
-	private TestResult runTest(TestCall test, String baseURL) throws TestRunnerException {
+	private TestResult runTest(TestCall test, String baseURL, String authToken) throws TestRunnerException {
 		CallDefinition callDef = callDefinitionService.getCallDefinition(test.getCallDefinitionID());
 
 		GenericResults<?> expected = getExpected(test, callDef);
-		GenericResults<?> actual = getActual(test, callDef, baseURL);
+		GenericResults<?> actual = getActual(test, callDef, baseURL, authToken);
 
 		TestResult result = compare(expected, actual);
 
@@ -158,9 +159,11 @@ public class TestRunnerService {
 				callDef.isExpectedReturnTypeHasList());
 	}
 
-	private GenericResults<?> getActual(TestCall test, CallDefinition callDef, String baseURL) {
+	private GenericResults<?> getActual(TestCall test, CallDefinition callDef, String baseURL, String authToken) {
 		RestTemplate restTemplate = new RestTemplate();
 		URI url = buildURL(baseURL, test.getCallPath());
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Authorization", authToken);
 		ResponseEntity<String> actualEntity = restTemplate.getForEntity(url, String.class);
 
 		System.out.println(actualEntity.getStatusCodeValue());

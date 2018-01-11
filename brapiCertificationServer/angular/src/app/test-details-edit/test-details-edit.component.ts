@@ -7,6 +7,7 @@ import { TestAccessService } from '../service/test-access.service';
 import { TestCall } from '../model/test-call.class';
 import { CallDefinition } from '../model/call-defintion';
 import { TestCallParam } from '../model/test-call-param';
+import { AlertService } from '../service/alert.service';
 
 @Component({
   selector: 'app-test-details-edit',
@@ -21,7 +22,7 @@ export class TestDetailsEditComponent implements OnInit {
   @Output() useCaseId: EventEmitter<string> = new EventEmitter();
   callDefs: CallDefinition[];
 
-  constructor(private testAccessService: TestAccessService, private router: Router) { }
+  constructor(private testAccessService: TestAccessService, private router: Router, private alertService: AlertService) { }
 
   ngOnInit() {
     this.callDefs = new Array();
@@ -30,21 +31,24 @@ export class TestDetailsEditComponent implements OnInit {
       this.useCaseObs.subscribe((useCase: UseCase) => {
         this.useCase = useCase;
       });
+    }, err => {
+      this.alertService.handleHTTPError(err);
     });
   }
 
   save() {
     this.testAccessService.saveTest(this.useCase).subscribe((id: string) => {
       this.toggleEdit.emit(true);
-    },
-      (err: string) => {
-        console.log('something bad happened');
-      });
+    }, err => {
+      this.alertService.handleHTTPError(err);
+    });
   }
 
   delete(){
     this.testAccessService.deleteUseCase(this.useCase.id).subscribe(() =>{
       this.router.navigate(['/runtests']);
+    }, err => {
+      this.alertService.handleHTTPError(err);
     });
   }
 
@@ -115,15 +119,15 @@ export class TestDetailsEditComponent implements OnInit {
   buildCallDefsList() {
     this.testAccessService.getCallDefinitions().subscribe((data) => {
       this.callDefs = data;
+    }, err => {
+      this.alertService.handleHTTPError(err);
     });
   }
 
   findCallDefById(id: string) : CallDefinition {
-    console.log(id);
     let calldef = this.callDefs.find((value: CallDefinition) => {
       return value.id == id;
     });
-    console.log(calldef);
     return calldef;
   }
 }

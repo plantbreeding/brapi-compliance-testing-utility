@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Rx';
 import { TestAccessService } from '../service/test-access.service';
 import { UseCase } from '../model/use-case.class';
 import { CallDefinition } from '../model/call-defintion';
+import { AlertService } from '../service/alert.service';
 
 @Component({
   selector: 'app-test-details',
@@ -19,7 +20,7 @@ export class TestDetailsComponent implements OnInit, OnDestroy {
   edit: boolean;
   useCaseId: string;
 
-  constructor(private testAccessService: TestAccessService, private location: Location, private route: ActivatedRoute) { }
+  constructor(private testAccessService: TestAccessService, private location: Location, private route: ActivatedRoute, private alertService: AlertService) { }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
@@ -28,6 +29,8 @@ export class TestDetailsComponent implements OnInit, OnDestroy {
        if(this.useCaseId){
         this.useCase = this.testAccessService.getTest(this.useCaseId);
        }
+    }, err => {
+      this.alertService.handleHTTPError(err);
     });
   }
 

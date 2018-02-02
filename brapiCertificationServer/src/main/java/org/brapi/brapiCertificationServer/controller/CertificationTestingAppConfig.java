@@ -41,7 +41,8 @@ public class CertificationTestingAppConfig implements AsyncConfigurer {
 	}
 
 	public MongoClient mongoClient() {
-		return new MongoClient("mongo");
+//		return new MongoClient("mongo");
+		return new MongoClient("localhost");
 	}
 
 	public MongoTemplate mongoTemplate() {

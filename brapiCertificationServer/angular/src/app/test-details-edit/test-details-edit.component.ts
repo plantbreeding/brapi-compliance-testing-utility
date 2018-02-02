@@ -46,7 +46,7 @@ export class TestDetailsEditComponent implements OnInit {
 
   delete(){
     this.testAccessService.deleteUseCase(this.useCase.id).subscribe(() =>{
-      this.router.navigate(['/app/runtests']);
+      this.router.navigate(['/runtests']);
     }, err => {
       this.alertService.handleHTTPError(err);
     });

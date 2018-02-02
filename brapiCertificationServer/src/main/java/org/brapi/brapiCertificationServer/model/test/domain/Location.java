@@ -2,6 +2,9 @@ package org.brapi.brapiCertificationServer.model.test.domain;
 
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Location {
 	private String locationDbId;
 	private String locationType;

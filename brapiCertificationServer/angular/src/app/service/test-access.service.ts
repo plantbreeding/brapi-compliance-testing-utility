@@ -12,8 +12,9 @@ import { AlertService } from './alert.service';
 
 @Injectable()
 export class TestAccessService {
-  // for dev server: string = 'http://localhost:8081/';
-  server: string = 'https://' + window.location.hostname + '/service/';
+  // for dev 
+  server: string = 'http://localhost:8081/service/';
+  //server: string = 'https://' + window.location.hostname + '/service/';
   resultsSubject: Subject<UseCaseResult[]> = new Subject();
   private subscription: Subscription;
 
@@ -27,6 +28,7 @@ export class TestAccessService {
     this.subscription = Observable.timer(0, 1000).switchMap(val => {
       return this.http.get(this.server + 'testresults/' + batchId).map(this.getJsonBody);
     }).subscribe((data: UseCaseResultList) => {
+      console.log(data);
       if (data) {
         this.resultsSubject.next(data.results);
         if (data.complete >= data.total) {

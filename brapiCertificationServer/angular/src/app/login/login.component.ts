@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
 
   signIn(){
     this.loginService.signIn(() => {
-      this.router.navigate(['/app/runtests']);
+      this.router.navigate(['/runtests']);
     });
   }
 

@@ -18,14 +18,13 @@ import { AuthModule } from './auth.module';
 import { AlertsComponent } from './alerts/alerts.component';
 
 const appRoutes: Routes = [
-  { path: 'app/login', component: LoginComponent },
-  { path: 'app/runtests', component: RunTestsComponent },
-  { path: 'app/runtests/:batchId', component: RunTestsComponent },
-  { path: 'app/test/:id/:edit', component: TestDetailsComponent },
-  { path: 'app/results/:batchId/:id', component: TestResultDetailsComponent },
-  { path: 'app', pathMatch: 'full', redirectTo: 'app/login' },
-  { path: '', pathMatch: 'full', redirectTo: 'app/login' },
-  { path: '**', redirectTo: 'app/login' }
+  { path: 'login', component: LoginComponent },
+  { path: 'runtests', component: RunTestsComponent },
+  { path: 'runtests/:batchId', component: RunTestsComponent },
+  { path: 'test/:id/:edit', component: TestDetailsComponent },
+  { path: 'results/:batchId/:id', component: TestResultDetailsComponent },
+  { path: '', pathMatch: 'full', redirectTo: 'login' },
+  { path: '**', redirectTo: 'login' }
 ];
 
 @NgModule({

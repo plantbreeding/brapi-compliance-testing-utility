@@ -12,7 +12,8 @@ import { AlertService } from './alert.service';
 
 @Injectable()
 export class TestAccessService {
-  server: string = 'http://localhost:8081/';
+  // for dev server: string = 'http://localhost:8081/';
+  server: string = 'https://' + window.location.hostname + '/service/';
   resultsSubject: Subject<UseCaseResult[]> = new Subject();
   private subscription: Subscription;
 

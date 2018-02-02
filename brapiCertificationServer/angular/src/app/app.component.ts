@@ -16,7 +16,7 @@ export class AppComponent {
 
   signOut() {
     this.loginService.signOut(() => {
-      window.location.href='/login';
+      window.location.href='/app/login';
     });
   }
 }

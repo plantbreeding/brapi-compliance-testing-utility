@@ -71,7 +71,7 @@ export class TestSelectionListComponent implements OnInit {
     let useCase: UseCase = new UseCase();
     this.testAccessService.saveTest(useCase).subscribe(id => {
       console.log(id);
-      this.router.navigate(['/test', id, true]);
+      this.router.navigate(['/app/test', id, true]);
     }, err => {
       this.alertService.handleHTTPError(err);
     })

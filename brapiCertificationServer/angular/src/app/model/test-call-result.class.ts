@@ -4,4 +4,5 @@ export class TestCallResult{
     diffList: string[];
     rawExpected: string;
     rawActual: string;
+    url: string;
 }

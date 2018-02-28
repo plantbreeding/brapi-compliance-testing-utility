@@ -10,10 +10,17 @@
           Save
         </a>
       </h3>
+      Number of Servers:
+      <input type="number" step="1" min="1" max="10" [(ngModel)]="useCase.numberOfServers">
     </div>
     <div *ngFor="let call of useCase.tests; let i = index">
       <div style="font-size:  20px; margin-top:  20px;">
         <p>Call #{{call.useCaseIndexNumber + 1}}: {{call.callPath}}</p>
+      </div>
+      <div>
+        <p>Server Number:
+          <input type="number" step="1" min="1" max="{{ useCase.numberOfServers }}" [(ngModel)]="call.serverIndexNumber">
+        </p>
       </div>
       <div>
         <p>Call:
@@ -26,16 +33,20 @@
         <p>Parameters:</p>
         <div *ngFor="let param of findCallDefById(call.callDefinitionID).availibleParams" class="row">
           <div class="col-xs-2" style="margin-left: 20px">
-          <p >{{param}}</p>
-        </div>
-        <div class="col-xs-5">
-          <input type="text" (input)="onParamChange($event.target.value, param, call)" [value]="getParamValue(call, param)">
-        </div>
+            <p>{{param}}</p>
+          </div>
+          <div class="col-xs-5">
+            <input type="text" (input)="onParamChange($event.target.value, param, call)" [value]="getParamValue(call, param)">
+          </div>
         </div>
       </div>
       <div>
-        <p>Expected Return Content:</p>
-        <textarea [(ngModel)]="call.expectedResultRaw" cols="100" rows="20"></textarea>
+        <p>Expected Return Content:
+          <a (click)="loadDefault(call)" class="btn btn-default" style="float:right;">
+            Load Default
+          </a>
+        </p>
+        <textarea [(ngModel)]="call.expectedResultRaw" cols="106" rows="20" style="margin: 5px"></textarea>
       </div>
     </div>
     <a (click)="addCall()" class="btn btn-default">

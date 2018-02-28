@@ -1,11 +1,11 @@
 <app-alerts></app-alerts>
-<app-test-selection (testIds)="setTestIds($event)"></app-test-selection>
-<div class="row" style="margin: 10px 0">
+<app-test-selection (testIds)="setTestIds($event)" (numberOfServers)="setNumberOfServers($event)"></app-test-selection>
+<div *ngFor="let baseURL of baseURLs; let i = index;" class="row" style="margin: 10px 0">
   <div class="col-xs-offset-1 col-xs-2">
-    <p style="margin-top: 3px">Base URL: </p>
+    <p style="margin-top: 3px">Base URL #{{ i + 1 }}: </p>
   </div>
   <div class="col-xs-8">
-    <input class="col-xs-12" type="text" [(ngModel)]="baseURL" />
+    <input class="col-xs-12" type="text" [(ngModel)]="baseURL.baseURLString" />
   </div>
 </div>
 <div class="row">

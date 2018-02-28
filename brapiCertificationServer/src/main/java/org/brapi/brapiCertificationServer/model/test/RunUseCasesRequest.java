@@ -4,7 +4,7 @@ import java.util.List;
 
 public class RunUseCasesRequest {
 	private List<String> testCaseIds;
-	private String baseURL;
+	private List<String> baseURLs;
 
 	public List<String> getTestCaseIds() {
 		return testCaseIds;
@@ -12,11 +12,11 @@ public class RunUseCasesRequest {
 	public void setTestCaseIds(List<String> testCaseIds) {
 		this.testCaseIds = testCaseIds;
 	}
-	public String getBaseURL() {
-		return baseURL;
+	public List<String> getBaseURLs() {
+		return baseURLs;
 	}
-	public void setBaseURL(String baseURL) {
-		this.baseURL = baseURL;
+	public void setBaseURLs(List<String> baseURLs) {
+		this.baseURLs = baseURLs;
 	}
 	
 	

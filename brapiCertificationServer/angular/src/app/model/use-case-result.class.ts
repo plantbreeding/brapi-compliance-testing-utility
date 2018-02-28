@@ -5,6 +5,6 @@ export class UseCaseResult{
     batchID: string;
     pass: boolean;
     useCase: UseCase;
-    baseURL: string;
+    baseURLs: string[];
     results: TestCallResult[];
 }

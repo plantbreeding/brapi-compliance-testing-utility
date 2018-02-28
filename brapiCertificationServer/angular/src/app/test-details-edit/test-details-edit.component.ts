@@ -30,6 +30,7 @@ export class TestDetailsEditComponent implements OnInit {
       this.callDefs = data.sort(CallDefinition.sort);
       this.useCaseObs.subscribe((useCase: UseCase) => {
         this.useCase = useCase;
+        console.log(this.useCase);
       });
     }, err => {
       this.alertService.handleHTTPError(err);
@@ -129,5 +130,11 @@ export class TestDetailsEditComponent implements OnInit {
       return value.id == id;
     });
     return calldef;
+  }
+
+  loadDefault(call: TestCall){
+    this.testAccessService.getDefaultExpectedData(call.callPath).subscribe((data) => {
+      call.expectedResultRaw = JSON.stringify(data, null, 4);
+    });
   }
 }

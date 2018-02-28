@@ -3,7 +3,7 @@ package org.brapi.brapiCertificationServer.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.brapi.brapiCertificationServer.model.test.metadata.GenericResults;
+import org.brapi.test.BrAPITestServer.model.rest.metadata.GenericResults;
 import org.springframework.stereotype.Service;
 
 import de.danielbechler.diff.ObjectDiffer;

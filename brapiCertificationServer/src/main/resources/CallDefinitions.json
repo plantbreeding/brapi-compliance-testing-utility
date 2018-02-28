@@ -4,7 +4,7 @@
 		"method": "GET",
 		"call": "/calls",
 		"name": "GET /calls",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Call",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.Call",
 		"expectedReturnTypeHasList": true,
 		"availibleParams": [
 			"datatype",
@@ -17,7 +17,7 @@
 		"method": "GET",
 		"call": "/germplasm-search",
 		"name": "GET /germplasm-search",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Germplasm",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.Germplasm",
 		"expectedReturnTypeHasList": true,
 		"availibleParams": [
 			"germplasmPUI",
@@ -35,7 +35,7 @@
 		"method": "POST",
 		"call": "/germplasm-search",
 		"name": "POST /germplasm-search",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Germplasm",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.Germplasm",
 		"expectedReturnTypeHasList": true,
 		"availibleParams": []
 	},
@@ -44,7 +44,7 @@
 		"method": "GET",
 		"call": "/germplasm/{germplasmDbId}",
 		"name": "GET /germplasm/{germplasmDbId}",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Germplasm",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.Germplasm",
 		"expectedReturnTypeHasList": false,
 		"availibleParams": [
 			"{germplasmDbId}"
@@ -55,7 +55,7 @@
 		"method": "GET",
 		"call": "/germplasm/{germplasmDbId}/pedigree",
 		"name": "GET /germplasm/{germplasmDbId}/pedigree",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Pedigree",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.Pedigree",
 		"expectedReturnTypeHasList": false,
 		"availibleParams": [
 			"{germplasmDbId}",
@@ -65,9 +65,9 @@
 	{
 		"id": "6",
 		"method": "GET",
-		"call": "/germplasm/{germplasmDbId}/markerProfiles",
-		"name": "GET /germplasm/{germplasmDbId}/markerProfiles",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.MarkerProfileKeys",
+		"call": "/germplasm/{germplasmDbId}/markerprofiles",
+		"name": "GET /germplasm/{germplasmDbId}/markerprofiles",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.MarkerProfileKeys",
 		"expectedReturnTypeHasList": false,
 		"availibleParams": [
 			"{germplasmDbId}"
@@ -78,7 +78,7 @@
 		"method": "GET",
 		"call": "/attributes",
 		"name": "GET /attributes",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.GermplasmAttributeDefinition",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.GermplasmAttributeDefinition",
 		"expectedReturnTypeHasList": true,
 		"availibleParams": [
 			"attributeCategoryDbId",
@@ -91,7 +91,7 @@
 		"method": "GET",
 		"call": "/attributes/categories",
 		"name": "GET /attributes/categories",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.GermplasmAttributeCategory",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.GermplasmAttributeCategory",
 		"expectedReturnTypeHasList": true,
 		"availibleParams": [
 			"page",
@@ -103,7 +103,7 @@
 		"method": "GET",
 		"call": "/germplasm/{germplasmDbId}/attributes",
 		"name": "GET /germplasm/{germplasmDbId}/attributes",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.GermplasmAttributeValuesWrapper",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.GermplasmAttributeValuesWrapper",
 		"expectedReturnTypeHasList": false,
 		"availibleParams": [
 			"{germplasmDbId}",
@@ -117,7 +117,7 @@
 		"method": "GET",
 		"call": "/markers",
 		"name": "GET /markers",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Marker",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.Marker",
 		"expectedReturnTypeHasList": true,
 		"availibleParams": [
 			"name",
@@ -133,7 +133,7 @@
 		"method": "GET",
 		"call": "/markers/{markerDbId}",
 		"name": "GET /markers/{markerDbId}",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Marker",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.Marker",
 		"expectedReturnTypeHasList": false,
 		"availibleParams": [
 			"{markerDbId}"
@@ -142,9 +142,9 @@
 	{
 		"id": "12",
 		"method": "GET",
-		"call": "/markerProfiles",
-		"name": "GET /markerProfiles",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.MarkerProfileSummary",
+		"call": "/markerprofiles",
+		"name": "GET /markerprofiles",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.MarkerProfileSummary",
 		"expectedReturnTypeHasList": true,
 		"availibleParams": [
 			"germplasmDbId",
@@ -159,9 +159,9 @@
 	{
 		"id": "13",
 		"method": "GET",
-		"call": "/markerProfiles/{markerprofileDbId}",
-		"name": "GET /markerProfiles/{markerprofileDbId}",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.MarkerProfileDetails",
+		"call": "/markerprofiles/{markerprofileDbId}",
+		"name": "GET /markerprofiles/{markerprofileDbId}",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.MarkerProfileDetails",
 		"expectedReturnTypeHasList": false,
 		"availibleParams": [
 			"{markerprofileDbId}",
@@ -204,7 +204,7 @@
 		"method": "GET",
 		"call": "/programs",
 		"name": "GET /programs",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Program",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.Program",
 		"expectedReturnTypeHasList": true,
 		"availibleParams": [
 			"programName",
@@ -230,7 +230,7 @@
 		"method": "GET",
 		"call": "/trials",
 		"name": "GET /trials",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.TrialSummary",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.TrialSummary",
 		"expectedReturnTypeHasList": true,
 		"availibleParams": [
 			"page",
@@ -242,7 +242,7 @@
 		"method": "GET",
 		"call": "/trials/{trialsDbId}",
 		"name": "GET /trials/{trialsDbId}",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.TrialSummaryWithContact",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.TrialSummaryWithContact",
 		"expectedReturnTypeHasList": false,
 		"availibleParams": [
 			"{trialsDbId}"
@@ -253,7 +253,7 @@
 		"method": "GET",
 		"call": "/seasons",
 		"name": "GET /seasons",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Season",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.Season",
 		"expectedReturnTypeHasList": true,
 		"availibleParams": [
 			"year",
@@ -266,7 +266,7 @@
 		"method": "GET",
 		"call": "/studyTypes",
 		"name": "GET /studyTypes",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.StudyType",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.StudyType",
 		"expectedReturnTypeHasList": true,
 		"availibleParams": [
 			"page",
@@ -278,7 +278,7 @@
 		"method": "GET",
 		"call": "/studies-search",
 		"name": "GET /studies-search",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.StudySummary",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.StudySummary",
 		"expectedReturnTypeHasList": true,
 		"availibleParams": [
 			"studyType",
@@ -297,7 +297,7 @@
 		"method": "POST",
 		"call": "/studies-search",
 		"name": "POST /studies-search",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.StudySummary",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.StudySummary",
 		"expectedReturnTypeHasList": true,
 		"availibleParams": []
 	},
@@ -306,7 +306,7 @@
 		"method": "GET",
 		"call": "/studies/{studiesDbId}",
 		"name": "GET /studies/{studiesDbId}",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Study",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.Study",
 		"expectedReturnTypeHasList": false,
 		"availibleParams": [
 			"{studiesDbId}"
@@ -317,7 +317,7 @@
 		"method": "GET",
 		"call": "/studies/{studiesDbId}/observationVariables",
 		"name": "GET /studies/{studiesDbId}/observationVariables",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.StudyObservationVariable",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.StudyObservationVariable",
 		"expectedReturnTypeHasList": false,
 		"availibleParams": [
 			"{studiesDbId}"
@@ -328,7 +328,7 @@
 		"method": "GET",
 		"call": "/studies/{studiesDbId}/germplasm",
 		"name": "GET /studies/{studiesDbId}/germplasm",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.StudyGermplasm",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.StudyGermplasm",
 		"expectedReturnTypeHasList": false,
 		"availibleParams": [
 			"{studiesDbId}"
@@ -351,7 +351,7 @@
 		"method": "GET",
 		"call": "/studies/{studiesDbId}/observationunits",
 		"name": "GET /studies/{studiesDbId}/observationunits",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.StudyObservation",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.StudyObservation",
 		"expectedReturnTypeHasList": true,
 		"availibleParams": [
 			"{studiesDbId}",
@@ -365,7 +365,7 @@
 		"method": "POST",
 		"call": "/studies/{studiesDbId}/observationunits",
 		"name": "POST /studies/{studiesDbId}/observationunits",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.StudyObservation",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.StudyObservation",
 		"expectedReturnTypeHasList": true,
 		"availibleParams": [
 			"{studiesDbId}"
@@ -376,7 +376,7 @@
 		"method": "GET",
 		"call": "/studies/{studiesDbId}/table",
 		"name": "GET /studies/{studiesDbId}/table",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.StudyObservationUnitTable",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.StudyObservationUnitTable",
 		"expectedReturnTypeHasList": false,
 		"availibleParams": [
 			"{studiesDbId}",
@@ -388,7 +388,7 @@
 		"method": "POST",
 		"call": "/studies/{studiesDbId}/table",
 		"name": "POST /studies/{studiesDbId}/table",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.StudyObservationUnitTable",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.StudyObservationUnitTable",
 		"expectedReturnTypeHasList": false,
 		"availibleParams": [
 			"{studiesDbId}"
@@ -399,7 +399,7 @@
 		"method": "GET",
 		"call": "/studies/{studiesDbId}/layout",
 		"name": "GET /studies/{studiesDbId}/layout",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.StudyPlotLayout",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.StudyPlotLayout",
 		"expectedReturnTypeHasList": true,
 		"availibleParams": [
 			"{studiesDbId}",
@@ -412,7 +412,7 @@
 		"method": "GET",
 		"call": "/studies/{studiesDbId}/observations",
 		"name": "GET /studies/{studiesDbId}/observations",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.ObservationUnit",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.ObservationUnit",
 		"expectedReturnTypeHasList": true,
 		"availibleParams": [
 			"{studiesDbId}",
@@ -426,7 +426,7 @@
 		"method": "POST",
 		"call": "/phenotypes-search",
 		"name": "POST /phenotypes-search",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Phenotype",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.Phenotype",
 		"expectedReturnTypeHasList": true,
 		"availibleParams": []
 	},
@@ -435,7 +435,7 @@
 		"method": "GET",
 		"call": "/traits",
 		"name": "GET /traits",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.TraitSummary",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.TraitSummary",
 		"expectedReturnTypeHasList": true,
 		"availibleParams": [
 			"page",
@@ -447,7 +447,7 @@
 		"method": "GET",
 		"call": "/traits/{traitDbId}",
 		"name": "GET /traits/{traitDbId}",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.TraitSummary",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.TraitSummary",
 		"expectedReturnTypeHasList": false,
 		"availibleParams": [
 			"{traitDbId}"
@@ -470,7 +470,7 @@
 		"method": "GET",
 		"call": "/variables",
 		"name": "GET /variables",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.ObservationVariable",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.ObservationVariable",
 		"expectedReturnTypeHasList": true,
 		"availibleParams": [
 			"traitClass",
@@ -483,7 +483,7 @@
 		"method": "GET",
 		"call": "/variables/{observationVariableDbId}",
 		"name": "GET /variables/{observationVariableDbId}",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.ObservationVariable",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.ObservationVariable",
 		"expectedReturnTypeHasList": false,
 		"availibleParams": [
 			"{observationVariableDbId}"
@@ -494,7 +494,7 @@
 		"method": "POST",
 		"call": "/variables-search",
 		"name": "POST /variables-search",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.ObservationVariable",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.ObservationVariable",
 		"expectedReturnTypeHasList": true,
 		"availibleParams": []
 	},
@@ -503,7 +503,7 @@
 		"method": "GET",
 		"call": "/ontologies",
 		"name": "GET /ontologies",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Ontology",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.Ontology",
 		"expectedReturnTypeHasList": true,
 		"availibleParams": [
 			"page",
@@ -515,7 +515,7 @@
 		"method": "GET",
 		"call": "/maps",
 		"name": "GET /maps",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.GenomeMapSummary",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.GenomeMapSummary",
 		"expectedReturnTypeHasList": true,
 		"availibleParams": [
 			"speciesId",
@@ -529,7 +529,7 @@
 		"method": "GET",
 		"call": "/maps/{mapDbId}",
 		"name": "GET /maps/{mapDbId}",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.GenomeMapDetail",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.GenomeMapDetail",
 		"expectedReturnTypeHasList": false,
 		"availibleParams": [
 			"{mapDbId}"
@@ -540,7 +540,7 @@
 		"method": "GET",
 		"call": "/maps/{mapDbId}/positions",
 		"name": "GET /maps/{mapDbId}/positions",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.GenomeMapData",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.GenomeMapData",
 		"expectedReturnTypeHasList": true,
 		"availibleParams": [
 			"{mapDbId}",
@@ -556,7 +556,7 @@
 		"method": "GET",
 		"call": "/maps/{mapDbId}/positions/{linkageGroupId}",
 		"name": "GET /maps/{mapDbId}/positions/{linkageGroupId}",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.GenomeMapData",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.GenomeMapData",
 		"expectedReturnTypeHasList": true,
 		"availibleParams": [
 			"{mapDbId}",
@@ -572,7 +572,7 @@
 		"method": "GET",
 		"call": "/locations",
 		"name": "GET /locations",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Location",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.Location",
 		"expectedReturnTypeHasList": true,
 		"availibleParams": [
 			"locationType",
@@ -585,7 +585,7 @@
 		"method": "GET",
 		"call": "/locations/{locationsDbId}",
 		"name": "GET /locations/{locationsDbId}",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.Location",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.Location",
 		"expectedReturnTypeHasList": false,
 		"availibleParams": [
 			"{locationsDbId}"
@@ -596,7 +596,7 @@
 		"method": "PUT",
 		"call": "/samples",
 		"name": "PUT /samples",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.SampleDbIdWrapper",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.SampleDbIdWrapper",
 		"expectedReturnTypeHasList": false,
 		"availibleParams": []
 	},
@@ -605,7 +605,7 @@
 		"method": "GET",
 		"call": "/samples/{samplesDbId}",
 		"name": "GET /samples/{samplesDbId}",
-		"expectedReturnType": "org.brapi.brapiCertificationServer.model.test.domain.SampleDetail",
+		"expectedReturnType": "org.brapi.test.BrAPITestServer.model.rest.Sample",
 		"expectedReturnTypeHasList": false,
 		"availibleParams": [
 			"{samplesDbId}"

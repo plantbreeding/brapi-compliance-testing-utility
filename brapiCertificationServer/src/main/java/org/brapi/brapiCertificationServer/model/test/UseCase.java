@@ -9,6 +9,7 @@ public class UseCase {
 	private String id;
 	private String useCaseName;
 	private List<TestCall> tests;
+	private int numberOfServers;
 	
 	public String getId() {
 		return id;
@@ -27,6 +28,12 @@ public class UseCase {
 	}
 	public void setTests(List<TestCall> tests) {
 		this.tests = tests;
+	}
+	public int getNumberOfServers() {
+		return numberOfServers;
+	}
+	public void setNumberOfServers(int numberOfServers) {
+		this.numberOfServers = numberOfServers;
 	}
 	
 	

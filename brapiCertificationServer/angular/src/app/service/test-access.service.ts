@@ -13,7 +13,7 @@ import { AlertService } from './alert.service';
 @Injectable()
 export class TestAccessService {
   // for dev 
-  server: string = 'http://localhost:8081/service/';
+  server: string = 'http://localhost:8080/service/';
   //server: string = 'https://' + window.location.hostname + '/service/';
   resultsSubject: Subject<UseCaseResult[]> = new Subject();
   private subscription: Subscription;
@@ -74,5 +74,9 @@ export class TestAccessService {
 
   getStringBody(res: Response) {
     return res.text();
+  }
+
+  getDefaultExpectedData(path: string){
+    return this.http.get("https://test-server.brapi.org/brapi/v1" + path).map(this.getJsonBody);
   }
 }

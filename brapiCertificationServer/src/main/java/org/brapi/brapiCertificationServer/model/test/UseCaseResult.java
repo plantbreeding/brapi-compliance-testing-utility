@@ -5,7 +5,7 @@ import java.util.List;
 public class UseCaseResult {
 	private String batchID;
 	private boolean pass;
-	private String baseURL;
+	private List<String> baseURLs;
 	private UseCase useCase;
 	private List<TestResult> results;
 	
@@ -33,11 +33,11 @@ public class UseCaseResult {
 	public void setBatchID(String batchID) {
 		this.batchID = batchID;
 	}
-	public String getBaseURL() {
-		return baseURL;
+	public List<String> getBaseURL() {
+		return baseURLs;
 	}
-	public void setBaseURL(String baseURL) {
-		this.baseURL = baseURL;
+	public void setBaseURL(List<String> baseURLs) {
+		this.baseURLs = baseURLs;
 	}
 
 	

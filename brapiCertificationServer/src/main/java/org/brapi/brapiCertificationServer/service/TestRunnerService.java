@@ -8,11 +8,11 @@ import org.brapi.brapiCertificationServer.model.test.TestCall;
 import org.brapi.brapiCertificationServer.model.test.UseCase;
 import org.brapi.brapiCertificationServer.model.test.UseCaseResult;
 import org.brapi.brapiCertificationServer.model.test.UseCaseResultList;
+import org.brapi.test.BrAPITestServer.model.rest.metadata.GenericResults;
+import org.brapi.test.BrAPITestServer.model.rest.metadata.GenericResultsDataList;
 import org.brapi.brapiCertificationServer.model.test.CallDefinition;
 import org.brapi.brapiCertificationServer.model.test.RunUseCasesRequest;
 import org.brapi.brapiCertificationServer.model.test.TestResult;
-import org.brapi.brapiCertificationServer.model.test.metadata.GenericResults;
-import org.brapi.brapiCertificationServer.model.test.metadata.GenericResultsDataList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -53,7 +53,7 @@ public class TestRunnerService {
 			UseCase useCase = getTest(id);
 			UseCaseResult useCaseResult = new UseCaseResult();
 			useCaseResult.setBatchID(batchID);
-			useCaseResult.setBaseURL(request.getBaseURL());
+			useCaseResult.setBaseURL(request.getBaseURLs());
 			useCaseResult.setPass(true);
 			useCaseResult.setUseCase(useCase);
 			useCaseResult.setResults(new ArrayList<>());
@@ -62,7 +62,7 @@ public class TestRunnerService {
 				for (TestCall test : useCase.getTests()) {
 					TestResult result = new TestResult();
 					try {
-						result = runTest(test, request.getBaseURL(), authToken);
+						result = runTest(test, request.getBaseURLs().get(test.getServerIndexNumber() - 1), authToken);
 					} catch (Exception e) {
 						result.setErrorMsg(e.getMessage());
 						result.setPass(false);
@@ -94,12 +94,15 @@ public class TestRunnerService {
 		CallDefinition callDef = callDefinitionService.getCallDefinition(test.getCallDefinitionID());
 
 		GenericResults<?> expected = getExpected(test, callDef);
-		GenericResults<?> actual = getActual(test, callDef, baseURL, authToken);
+
+		URI url = buildURL(baseURL, test.getCallPath());
+		GenericResults<?> actual = getActual(callDef, url, authToken);
 
 		TestResult result = compare(expected, actual);
 
 		result.setRawExpected(getRawObject(expected));
 		result.setRawActual(getRawObject(actual));
+		result.setUrl(url.toString());
 
 		return result;
 	}
@@ -159,9 +162,8 @@ public class TestRunnerService {
 				callDef.isExpectedReturnTypeHasList());
 	}
 
-	private GenericResults<?> getActual(TestCall test, CallDefinition callDef, String baseURL, String authToken) {
+	private GenericResults<?> getActual(CallDefinition callDef, URI url, String authToken) {
 		RestTemplate restTemplate = new RestTemplate();
-		URI url = buildURL(baseURL, test.getCallPath());
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Authorization", authToken);
 		ResponseEntity<String> actualEntity = restTemplate.getForEntity(url, String.class);

@@ -13,6 +13,7 @@ import { UseCaseResult } from '../model/use-case-result.class';
 export class TestSelectionComponent implements OnInit {
 
   @Output() testIds: EventEmitter<String[]> = new EventEmitter();
+  @Output() numberOfServers: EventEmitter<number> = new EventEmitter();
 
   testCategories: TestCategory[];
   selectedCategory: TestCategory;
@@ -52,11 +53,22 @@ export class TestSelectionComponent implements OnInit {
       allIds = allIds.concat(category.testList.filter((val) => { return val.selected }).map((val) => { return val.id }));
     }
     this.testIds.emit(allIds);
+    this.numberOfServers.emit(this.calcNumServers());
   }
 
   calcSelectedTotal(cases:UseCase[]):number{
     let x = cases.filter((val) => {return val.selected });
     return x.length;
+  }
+
+  calcNumServers(): number{
+    let num = 0;
+    for (let category of this.testCategories) {
+      category.testList.filter((val) => { return val.selected }).forEach((val) => {
+        num = num >= val.numberOfServers ? num : val.numberOfServers;
+      });
+    }
+    return num;
   }
 
   getCategories(): TestCategory[] {

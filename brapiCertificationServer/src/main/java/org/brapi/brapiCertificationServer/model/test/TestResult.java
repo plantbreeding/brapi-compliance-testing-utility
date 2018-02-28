@@ -5,6 +5,7 @@ import java.util.List;
 public class TestResult {
 	private boolean pass;
 	private String errorMsg;
+	private String url;
 	private List<String> diffList;
 	private String rawExpected;
 	private String rawActual;
@@ -38,6 +39,12 @@ public class TestResult {
 	}
 	public void setDiffList(List<String> diffList) {
 		this.diffList = diffList;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
 	}
 	
 }

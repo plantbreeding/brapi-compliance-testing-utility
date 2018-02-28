@@ -1,4 +1,6 @@
+import { BaseUrl } from "./baseURL.class";
+
 export class RunTestRequest{
-    baseURL: String;
+    baseURLs: String[];
     testCaseIds: String[];
 }

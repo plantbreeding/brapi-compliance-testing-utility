@@ -7,6 +7,7 @@ public class TestCall {
 	private String callPath;
 	private String callDefinitionID;
 	private String expectedResultRaw;
+	private int serverIndexNumber;
 	private List<TestCallParam> paramList;
 	
 	public int getUseCaseIndexNumber() {
@@ -38,6 +39,12 @@ public class TestCall {
 	}
 	public void setCallDefinitionID(String callDefinitionID) {
 		this.callDefinitionID = callDefinitionID;
+	}
+	public int getServerIndexNumber() {
+		return serverIndexNumber;
+	}
+	public void setServerIndexNumber(int serverIndexNumber) {
+		this.serverIndexNumber = serverIndexNumber;
 	}
 		
 }

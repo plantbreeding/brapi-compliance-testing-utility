@@ -5,4 +5,5 @@ export class UseCase{
     useCaseName: string;
     tests: TestCall[] = new Array();
     selected: boolean = true;
+    numberOfServers: number = 1;
 }
